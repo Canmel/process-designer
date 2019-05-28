@@ -1,0 +1,31 @@
+<!--<h3>Transfer Data via Drag Drop</h3>-->
+<!--<div class="row">-->
+  <!--<div class="col-sm-3">-->
+    <!--<ul class="list-group">-->
+      <!--<li draggable *ngFor="let item of items" [dragData]="item" class="list-group-item">{{item.name}}</li>-->
+    <!--</ul>-->
+  <!--</div>-->
+
+  <!--<div class="col-sm-3">-->
+    <!--<div class="panel panel-default" droppable (onDrop)="onItemDrop($event)">-->
+      <!--<div class="panel-heading">Drop Items here</div>-->
+      <!--<div class="panel-body">-->
+        <!--<li *ngFor="let item of droppedItems" class="list-group-item">{{item.name}}</li>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="designer-background" droppable (onDrop)="onItemDrop($event)">
+  <nz-card [nzBordered]="false" nzTitle="工具栏" [nzExtra]="extraTemplate" class="tools-background">
+    <p draggable [dragData]="'oop1'">Card content</p>
+    <p draggable [dragData]="'oop2'">Card content</p>
+    <p draggable [dragData]="'oop3'">Card content</p>
+  </nz-card>
+
+  <div *ngFor="let item of tasks" >
+    adasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasd
+  </div>
+
+
+</div>

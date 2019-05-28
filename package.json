@@ -21,7 +21,10 @@
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
     "core-js": "^2.5.4",
+    "ng-zorro-antd": "^7.4.1",
+    "ng2-drag-drop": "^3.0.2",
     "rxjs": "~6.3.3",
+    "rxjs-compat": "^6.4.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

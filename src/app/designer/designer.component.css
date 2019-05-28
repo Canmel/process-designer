@@ -1,0 +1,15 @@
+.designer-background{
+  height: 800px;
+  background-color: #595959;
+}
+
+.tools-background {
+  height: 400px;
+  width: 150px;
+  position: absolute;
+  background-color: aquamarine;
+}
+
+p {
+  margin: 0;
+}

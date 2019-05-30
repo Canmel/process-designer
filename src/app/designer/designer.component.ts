@@ -29,4 +29,8 @@ export class DesignerComponent implements OnInit {
   ngOnInit() {
   }
 
+  rectMouseUpHandler() {
+    alert(11);
+  }
+
 }

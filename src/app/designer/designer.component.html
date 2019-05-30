@@ -23,9 +23,18 @@
     <p draggable [dragData]="'oop3'">Card content</p>
   </nz-card>
 
-  <div *ngFor="let item of tasks" >
-    adasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasd
-  </div>
+
+
+  <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+    <rect [attr.width]="item.width" [attr.height]="item.height"
+          [attr.x]="item.x" [attr.y]="item.y"
+          [attr.rx] = "12" [attr.fill]="item.mainColor"
+          stroke="black" stroke-width="2"
+          *ngFor="let item of tasks">
+      {{item.x}}
+    </rect>
+  </svg>
 
 
 </div>

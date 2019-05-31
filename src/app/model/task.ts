@@ -1,32 +1,29 @@
-export class Task {
-  x: number;
-  y: number;
+import {BaseEvent} from './base-event';
+
+export class Task extends BaseEvent {
   width: number;
   height: number;
-  name: string;
-  mainColor: string;
 
   constructor(x: number, y: number, name: string) {
-    this.mainColor = '#fff';
-    this.width = 200;
-    this.height = 80;
+    super();
+    this.width = 120;
+    this.height = 50;
     this.x = this.correctPosition(x, this.width);
     this.y = this.correctPosition(y, this.height);
     if (name === undefined || name === '') {
-      this.name = '任务';
+      this.name = '未命名任务';
     } else {
       this.name = name;
     }
-    console.log(this.x, this.y);
   }
 
   setX(x: number): Task {
-    this.x = x;
+    this.x = this.correctPosition(x, this.width);
     return this;
   }
 
   setY(y: number): Task {
-    this.y = y;
+    this.y = this.correctPosition(y, this.height);
     return this;
   }
 

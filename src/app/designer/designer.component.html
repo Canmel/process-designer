@@ -1,47 +1,141 @@
-<!--<h3>Transfer Data via Drag Drop</h3>-->
-<!--<div class="row">-->
-<!--<div class="col-sm-3">-->
-<!--<ul class="list-group">-->
-<!--<li draggable *ngFor="let item of items" [dragData]="item" class="list-group-item">{{item.name}}</li>-->
-<!--</ul>-->
-<!--</div>-->
+<div nz-row [nzGutter]="8">
+  <div nz-col nzSpan="3">
+    <nz-card [nzBordered]="true" nzTitle="工具栏" [nzExtra]="extraTemplate" class="tools-background" style="padding: 0px">
+      <div nz-row style="height: 100%;">
+        <nz-col nz-col nzSpan="12" class="tool-panel-left">
+          <div draggable [dragData]="'start'">
+            <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 (mousemove)="toolsMouseMoveHandler($event, '开始')" (mouseout)="toolsMouseOutHandler()"
+                 style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+              <circle cx="28" cy="20" r="18" stroke="black"
+                      stroke-width="2" fill="white"></circle>
+            </svg>
+          </div>
+          <div draggable [dragData]="'intermediates'">
+            <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 (mousemove)="toolsMouseMoveHandler($event, '中继')" (mouseout)="toolsMouseOutHandler()"
+                 style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+              <circle cx="28" cy="20" r="19" stroke="black"
+                      stroke-width="1" fill="white"></circle>
+              <circle cx="28" cy="20" r="15" stroke="black"
+                      stroke-width="1" fill="white"></circle>
 
-<!--<div class="col-sm-3">-->
-<!--<div class="panel panel-default" droppable (onDrop)="onItemDrop($event)">-->
-<!--<div class="panel-heading">Drop Items here</div>-->
-<!--<div class="panel-body">-->
-<!--<li *ngFor="let item of droppedItems" class="list-group-item">{{item.name}}</li>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
+            </svg>
+          </div>
+          <div>
+            <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 (mousemove)="toolsMouseMoveHandler($event, '路由')" (mouseout)="toolsMouseOutHandler()"
+                 style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+              <rect width="25" height="25" x="10" y="15" stroke="black" transform="translate(30,-13)rotate(45)"
+                    stroke-width="1" fill="white"></rect>
 
-<div class="designer-background" droppable (onDrop)="onItemDrop($event)">
-  <nz-card [nzBordered]="false" nzTitle="工具栏" [nzExtra]="extraTemplate" class="tools-background">
-    <p draggable [dragData]="'oop1'">Card content</p>
-    <p draggable [dragData]="'oop2'">Card content</p>
-    <p draggable [dragData]="'oop3'">Card content</p>
-  </nz-card>
+            </svg>
+          </div>
+        </nz-col>
+        <nz-col nz-col nzSpan="12" class="tool-panel-right">
+          <div draggable [dragData]="'end'">
+            <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 (mousemove)="toolsMouseMoveHandler($event, '结束')" (mouseout)="toolsMouseOutHandler()"
+                 style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+              <circle cx="28" cy="20" r="15" stroke="black"
+                      stroke-width="5" fill="white"></circle>
+            </svg>
+          </div>
+          <div draggable [dragData]="'task'">
+            <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 (mousemove)="toolsMouseMoveHandler($event, '任务')" (mouseout)="toolsMouseOutHandler()"
+                 style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+              <rect width="40" height="30" x="7" y="5" stroke="black" rx="4"
+                    stroke-width="1" fill="white"></rect>
+            </svg>
+          </div>
+        </nz-col>
+      </div>
 
 
-  <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"
-       style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-    <g *ngFor="let item of tasks"
-       (mousemove)="rectMouseMoveHandler($event)"
-       (mousedown)="rectMouseDownHandler($event, item)">
-      <g class="d-outline">
-        <rect [attr.width]="item.width" [attr.height]="item.height"
-              [attr.x]="item.x" [attr.y]="item.y"
-              [attr.rx]="12" [attr.fill]="item.mainColor"
-              stroke="black" stroke-width="2">
-        </rect>
-        <text fill="black" text-anchor="middle" [attr.x]="item.x + (item.width / 2)" [attr.y]="item.y + (item.height / 2)" width="30"
-              [attr.width]="item.width" [attr.height]="item.height">任务</text>
+      <!--<p draggable [dragData]="'task'">Card content</p>-->
+      <!--<p draggable [dragData]="'oop2'">Card content</p>-->
+      <!--<p draggable [dragData]="'oop3'">Card content</p>-->
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="21" class="designer-background" droppable (onDrop)="onItemDrop($event)">
+
+
+    <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" (click)="bgClick($event)"
+         style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+      <g *ngFor="let item of tasks"
+         (mousemove)="rectMouseMoveHandler($event, item)"
+         (mouseup)="rectMouseUpHandler($event, item)"
+         (mousedown)="rectMouseDownHandler($event, item)">
+        <g class="d-outline">
+          <rect [attr.width]="item.width" [attr.height]="item.height"
+                [attr.x]="item.x" [attr.y]="item.y"
+                [attr.rx]="12" [attr.fill]="item.mainColor"
+                stroke="black" stroke-width="2">
+          </rect>
+          <text fill="black" text-anchor="middle" [attr.x]="item.x + (item.width / 2)"
+                [attr.y]="item.y + 6 + (item.height / 2)" width="30"
+                [attr.width]="item.width" [attr.height]="item.height">{{item.name}}
+          </text>
+        </g>
+        <rect [attr.width]="item.width + 2 * item.borderWidth" [attr.height]="item.height + 2 * item.borderWidth" fill="none"
+              [attr.x]="item.x - item.borderWidth" [attr.y]="item.y - item.borderWidth"></rect>
       </g>
-      <rect [attr.width]="item.width + 6" [attr.height]="item.height + 6" fill="none"
-            [attr.x]="item.x - 3" [attr.y]="item.y - 3"></rect>
-    </g>
-  </svg>
 
+      <g *ngFor="let item of starts"
+         (mousemove)="rectMouseMoveHandler($event, item)"
+         (mouseup)="rectMouseUpHandler($event, item)"
+         (mousedown)="rectMouseDownHandler($event, item)">
+        <g class="d-outline">
+          <circle [attr.r]="item.radius"
+                  [attr.cx]="item.x" [attr.cy]="item.y"
+                  [attr.fill]="item.mainColor"
+                  stroke="black" stroke-width="2">
+          </circle>
+        </g>
+        <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
+              [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
+      </g>
 
+      <g *ngFor="let item of ends"
+         (mousemove)="rectMouseMoveHandler($event, item)"
+         (mouseup)="rectMouseUpHandler($event, item)"
+         (mousedown)="rectMouseDownHandler($event, item)">
+        <g class="d-outline">
+          <circle [attr.r]="item.radius"
+                  [attr.cx]="item.x" [attr.cy]="item.y"
+                  [attr.fill]="item.mainColor"
+                  stroke="black" [attr.stroke-width]="item.strokeWidth">
+          </circle>
+        </g>
+        <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
+              [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
+      </g>
+
+      <g *ngFor="let item of intermediates"
+         (mousemove)="rectMouseMoveHandler($event, item)"
+         (mouseup)="rectMouseUpHandler($event, item)"
+         (mousedown)="rectMouseDownHandler($event, item)">
+        <g class="d-outline">
+          <circle [attr.r]="item.radius"
+                  [attr.cx]="item.x" [attr.cy]="item.y"
+                  [attr.fill]="item.mainColor"
+                  stroke="black" [attr.stroke-width]="item.strokeWidth">
+          </circle>
+
+          <circle [attr.r]="item.radiusInner"
+                  [attr.cx]="item.x" [attr.cy]="item.y"
+                  [attr.fill]="item.mainColor"
+                  stroke="black" [attr.stroke-width]="item.strokeWidth">
+          </circle>
+        </g>
+        <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
+              [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
+      </g>
+
+    </svg>
+
+  </div>
+</div>
+<div class="tool-move-tips" [style.top]="currentTip.y + 'px'" [style.left]="currentTip.x + 'px'"><span>{{currentTip.message}}</span>
 </div>

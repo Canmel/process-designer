@@ -1,13 +1,12 @@
 .designer-background {
   height: 800px;
-  background-color: #fff;
+  background-color: #efefef;
 }
 
 .tools-background {
   height: 400px;
-  width: 150px;
-  position: absolute;
-  background-color: aquamarine;
+  /*width: 150px;*/
+  background-color: #cccccc54;
 }
 
 p {
@@ -19,7 +18,21 @@ p {
 }
 
 .d-outline:hover + rect {
-  stroke-dasharray: 5, 5;
+  stroke-dasharray: 3, 3;
   stroke: red;
   stroke-width: 1;
+}
+
+.tool-move-tips {
+  background-color: beige;
+  position: fixed;
+}
+
+.tool-panel-left > div{
+  border-right: 1px solid #dadada;
+  border-bottom: 1px solid #dadada;
+}
+
+.tool-panel-right > div{
+  border-bottom: 1px solid #dadada;
 }

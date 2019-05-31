@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Task} from '../model/task';
+import {$} from 'protractor';
 
 @Component({
   selector: 'app-designer',
@@ -14,6 +15,8 @@ export class DesignerComponent implements OnInit {
   droppedItems = [];
 
   tasks = [];
+
+  showOutLine = false;
 
   onItemDrop(e: any) {
     console.log(e['nativeEvent']['offsetX']);
@@ -31,6 +34,17 @@ export class DesignerComponent implements OnInit {
 
   rectMouseUpHandler() {
     alert(11);
+  }
+
+  rectMouseMoveHandler(e) {
+    // console.log(e.target);
+    // e.target.attribute('class', 'qwe');
+  }
+
+  rectMouseDownHandler(e: any, item) {
+    console.log(item.x, item.y);
+    item.setX(e['layerX']).setY(e['layerY']);
+    console.log(item.x, item.y);
   }
 
 }

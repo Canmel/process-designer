@@ -1,19 +1,19 @@
 <!--<h3>Transfer Data via Drag Drop</h3>-->
 <!--<div class="row">-->
-  <!--<div class="col-sm-3">-->
-    <!--<ul class="list-group">-->
-      <!--<li draggable *ngFor="let item of items" [dragData]="item" class="list-group-item">{{item.name}}</li>-->
-    <!--</ul>-->
-  <!--</div>-->
+<!--<div class="col-sm-3">-->
+<!--<ul class="list-group">-->
+<!--<li draggable *ngFor="let item of items" [dragData]="item" class="list-group-item">{{item.name}}</li>-->
+<!--</ul>-->
+<!--</div>-->
 
-  <!--<div class="col-sm-3">-->
-    <!--<div class="panel panel-default" droppable (onDrop)="onItemDrop($event)">-->
-      <!--<div class="panel-heading">Drop Items here</div>-->
-      <!--<div class="panel-body">-->
-        <!--<li *ngFor="let item of droppedItems" class="list-group-item">{{item.name}}</li>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
+<!--<div class="col-sm-3">-->
+<!--<div class="panel panel-default" droppable (onDrop)="onItemDrop($event)">-->
+<!--<div class="panel-heading">Drop Items here</div>-->
+<!--<div class="panel-body">-->
+<!--<li *ngFor="let item of droppedItems" class="list-group-item">{{item.name}}</li>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 <!--</div>-->
 
 <div class="designer-background" droppable (onDrop)="onItemDrop($event)">
@@ -24,16 +24,23 @@
   </nz-card>
 
 
-
-  <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
-
-    <rect [attr.width]="item.width" [attr.height]="item.height"
-          [attr.x]="item.x" [attr.y]="item.y"
-          [attr.rx] = "12" [attr.fill]="item.mainColor"
-          stroke="black" stroke-width="2"
-          *ngFor="let item of tasks">
-      {{item.x}}
-    </rect>
+  <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"
+       style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <g *ngFor="let item of tasks"
+       (mousemove)="rectMouseMoveHandler($event)"
+       (mousedown)="rectMouseDownHandler($event, item)">
+      <g class="d-outline">
+        <rect [attr.width]="item.width" [attr.height]="item.height"
+              [attr.x]="item.x" [attr.y]="item.y"
+              [attr.rx]="12" [attr.fill]="item.mainColor"
+              stroke="black" stroke-width="2">
+        </rect>
+        <text fill="black" text-anchor="middle" [attr.x]="item.x + (item.width / 2)" [attr.y]="item.y + (item.height / 2)" width="30"
+              [attr.width]="item.width" [attr.height]="item.height">任务</text>
+      </g>
+      <rect [attr.width]="item.width + 6" [attr.height]="item.height + 6" fill="none"
+            [attr.x]="item.x - 3" [attr.y]="item.y - 3"></rect>
+    </g>
   </svg>
 
 

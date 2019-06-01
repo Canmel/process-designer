@@ -2,11 +2,13 @@ import {BaseEvent} from './base-event';
 
 export class Start extends BaseEvent {
   radius: number;
+  strokeWidth: number;
 
   constructor(x: number, y: number, name: string) {
     super();
     this.radius = 20;
     this.borderWidth = 8;
+    this.strokeWidth = 2;
     this.x = this.correctPosition(x, 0);
     this.y = this.correctPosition(y, 0);
     if (name === undefined || name === '') {

@@ -64,6 +64,7 @@
     <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"
          (mousemove)="rectMouseMoveHandler($event)"
          style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+      <!--任务相关 开始-->
       <g *ngFor="let item of tasks"
          (mousedown)="rectMouseDownHandler($event, item)">
         <g class="d-outline">
@@ -80,28 +81,11 @@
         <rect [attr.width]="item.width + 2 * item.borderWidth" [attr.height]="item.height + 2 * item.borderWidth" fill="none"
               [attr.x]="item.x - item.borderWidth" [attr.y]="item.y - item.borderWidth"></rect>
       </g>
-
-      <g *ngIf="taskMove"
-         (mouseup)="rectMouseUpHandler($event)">
-        <g>
-          <rect [attr.width]="taskMove.width" [attr.height]="taskMove.height"
-                [attr.x]="taskMove.x" [attr.y]="taskMove.y"
-                [attr.rx]="12" fill="none"
-                [attr.stroke]="taskMove.skin" stroke-width="2">
-          </rect>
-          <text [attr.fill]="taskMove.skin" text-anchor="middle" [attr.x]="taskMove.x + (taskMove.width / 2)"
-                [attr.y]="taskMove.y + 6 + (taskMove.height / 2)" width="30"
-                [attr.width]="taskMove.width" [attr.height]="taskMove.height">{{taskMove.name}}
-          </text>
-        </g>
-        <rect [attr.width]="taskMove.width + 2 * taskMove.borderWidth" [attr.height]="taskMove.height + 2 * taskMove.borderWidth" fill="none"
-              [attr.x]="taskMove.x - taskMove.borderWidth" [attr.y]="taskMove.y - taskMove.borderWidth"></rect>
-      </g>
+      <!--任务相关 结束-->
 
 
-
+      <!--开始相关 开始-->
       <g *ngFor="let item of starts"
-         (mouseup)="rectMouseUpHandler($event)"
          (mousedown)="rectMouseDownHandler($event, item)">
         <g class="d-outline">
           <circle [attr.r]="item.radius"
@@ -113,9 +97,10 @@
         <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
               [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
       </g>
+      <!--开始相关 结束-->
 
+      <!--结束相关 开始-->
       <g *ngFor="let item of ends"
-         (mouseup)="rectMouseUpHandler($event)"
          (mousedown)="rectMouseDownHandler($event, item)">
         <g class="d-outline">
           <circle [attr.r]="item.radius"
@@ -127,9 +112,10 @@
         <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
               [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
       </g>
+      <!--结束相关 结束-->
 
+      <!--中继器 开始-->
       <g *ngFor="let item of intermediates"
-         (mouseup)="rectMouseUpHandler($event)"
          (mousedown)="rectMouseDownHandler($event, item)">
         <g class="d-outline">
           <circle [attr.r]="item.radius"
@@ -147,6 +133,34 @@
         <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
               [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
       </g>
+      <!--中继器 结束-->
+
+      <!--移动组件 开始-->
+      <g *ngIf="taskMove"
+         (mouseup)="rectMouseUpHandler($event)">
+        <g>
+          <rect *ngIf="isShowRect(taskMove)" [attr.width]="taskMove.width" [attr.height]="taskMove.height"
+                [attr.x]="taskMove.x" [attr.y]="taskMove.y"
+                [attr.rx]="12" fill="white"
+                [attr.stroke]="taskMove.skin" stroke-width="2">
+          </rect>
+          <text *ngIf="isShowText(taskMove)" [attr.fill]="taskMove.skin" text-anchor="middle" [attr.x]="taskMove.x + (taskMove.width / 2)"
+                [attr.y]="taskMove.y + 6 + (taskMove.height / 2)" width="30"
+                [attr.width]="taskMove.width" [attr.height]="taskMove.height">{{taskMove.name}}
+          </text>
+
+          <circle *ngIf="isShowCircle(taskMove)" [attr.r]="taskMove.radius"
+                  [attr.cx]="taskMove.x" [attr.cy]="taskMove.y" fill="white"
+                  [attr.stroke]="taskMove.skin" [attr.stroke-width]="taskMove.strokeWidth">
+          </circle>
+
+          <circle *ngIf="isShowInnerCircle(taskMove)" [attr.r]="taskMove.radiusInner"
+                  [attr.cx]="taskMove.x" [attr.cy]="taskMove.y" fill="white"
+                  [attr.stroke]="taskMove.skin" [attr.stroke-width]="taskMove.strokeWidth">
+          </circle>
+        </g>
+      </g>
+      <!--移动组件 结束-->
 
     </svg>
 

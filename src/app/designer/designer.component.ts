@@ -16,7 +16,6 @@ export class DesignerComponent implements OnInit {
   taskMove: BaseEvent = null;
 
   starts: Array<Start> = [];
-  startMove = null;
 
   ends: Array<End> = [];
 
@@ -41,7 +40,6 @@ export class DesignerComponent implements OnInit {
         this.intermediates.push(new Intermediate(e['nativeEvent']['offsetX'], e['nativeEvent']['offsetY'], ''));
         break;
       default :
-        alert('222');
     }
   }
 
@@ -52,7 +50,7 @@ export class DesignerComponent implements OnInit {
   }
 
   rectMouseUpHandler(e) {
-    if (!this.selected) {
+    if (this.selected === null) {
       return;
     }
     this.selected.setTrueX(this.taskMove.x).setTrueY(this.taskMove.y);
@@ -68,35 +66,28 @@ export class DesignerComponent implements OnInit {
   rectMouseDownHandler(e: any, item) {
     this.selected = item;
     this.taskMove = this.copyNewInstance(item);
-    console.log(this.taskMove);
   }
 
   copyNewInstance(item) {
-    switch (item.instanceof) {
-      case (Task):
-        const task = new Task(0, 0, item.name);
-        task.setTrueX(item.x).setTrueY(item.y);
-        return task;
-      case (Start):
-        const start = new Start(0, 0, item.name);
-        start.setTrueX(item.x).setTrueY(item.y);
-        return start;
-      case (End):
-        const end = new End(0, 0, item.name);
-        end.setTrueX(item.x).setTrueY(item.y);
-        return end;
-      case (Intermediate):
-        const intermediate = new Intermediate(0, 0, item.name);
-        intermediate.setTrueX(item.x).setTrueY(item.y);
-        return intermediate;
-    }
-
-
     if (item instanceof Task) {
-      // 不能通过构造器， 因为构造器有转值操作
       const task = new Task(0, 0, item.name);
       task.setTrueX(item.x).setTrueY(item.y);
       return task;
+    }
+    if (item instanceof Start) {
+      const start = new Start(0, 0, item.name);
+      start.setTrueX(item.x).setTrueY(item.y);
+      return start;
+    }
+    if (item instanceof End) {
+      const end = new End(0, 0, item.name);
+      end.setTrueX(item.x).setTrueY(item.y);
+      return end;
+    }
+    if (item instanceof Intermediate) {
+      const intermediate = new Intermediate(0, 0, item.name);
+      intermediate.setTrueX(item.x).setTrueY(item.y);
+      return intermediate;
     }
   }
 
@@ -126,6 +117,40 @@ export class DesignerComponent implements OnInit {
 
   isSelected(item) {
     return item.isSelected;
+  }
+
+  isShowRect(item: BaseEvent): boolean {
+    if (item instanceof Task) {
+      return true;
+    }
+    return false;
+  }
+
+  isShowText(item: BaseEvent): boolean {
+    if (item instanceof Task) {
+      return true;
+    }
+    return false;
+  }
+
+  isShowCircle(item: BaseEvent): boolean {
+    if (item instanceof End) {
+      return true;
+    }
+    if (item instanceof Start) {
+      return true;
+    }
+    if (item instanceof Intermediate) {
+      return true;
+    }
+    return false;
+  }
+
+  isShowInnerCircle(item: BaseEvent): boolean {
+    if (item instanceof Intermediate) {
+      return true;
+    }
+    return false;
   }
 
 }

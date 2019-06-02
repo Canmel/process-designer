@@ -7,7 +7,7 @@
             <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '开始')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-              <circle cx="28" cy="20" r="18" stroke="black"
+              <circle cx="25" cy="20" r="18" stroke="black"
                       stroke-width="2" fill="white"></circle>
             </svg>
           </div>
@@ -15,14 +15,14 @@
             <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '中继')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-              <circle cx="28" cy="20" r="19" stroke="black"
+              <circle cx="25" cy="20" r="19" stroke="black"
                       stroke-width="1" fill="white"></circle>
-              <circle cx="28" cy="20" r="15" stroke="black"
+              <circle cx="25" cy="20" r="15" stroke="black"
                       stroke-width="1" fill="white"></circle>
 
             </svg>
           </div>
-          <div>
+          <div draggable [dragData]="'getway'">
             <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '路由')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
@@ -62,78 +62,118 @@
 
 
     <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"
-         (mousemove)="rectMouseMoveHandler($event)"
+         (mousemove)="rectMouseMoveHandler($event)" (wheel)="test($event)"
          style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-      <!--任务相关 开始-->
-      <g *ngFor="let item of tasks"
-         (mousedown)="rectMouseDownHandler($event, item)">
-        <g class="d-outline">
-          <rect [attr.width]="item.width" [attr.height]="item.height"
-                [attr.x]="item.x" [attr.y]="item.y"
-                [attr.rx]="12" [attr.fill]="item.mainColor"
-                stroke="black" stroke-width="2">
-          </rect>
-          <text fill="black" text-anchor="middle" [attr.x]="item.x + (item.width / 2)"
-                [attr.y]="item.y + 6 + (item.height / 2)" width="30"
-                [attr.width]="item.width" [attr.height]="item.height">{{item.name}}
-          </text>
-        </g>
-        <rect [attr.width]="item.width + 2 * item.borderWidth" [attr.height]="item.height + 2 * item.borderWidth" fill="none"
-              [attr.x]="item.x - item.borderWidth" [attr.y]="item.y - item.borderWidth"></rect>
-      </g>
-      <!--任务相关 结束-->
-
-
-      <!--开始相关 开始-->
-      <g *ngFor="let item of starts"
-         (mousedown)="rectMouseDownHandler($event, item)">
-        <g class="d-outline">
-          <circle [attr.r]="item.radius"
-                  [attr.cx]="item.x" [attr.cy]="item.y"
-                  [attr.fill]="item.mainColor"
+      <g [attr.transform]="'translate('+ svgProperties.translateX + ', ' + svgProperties.translateY + ')'" >
+        <!--任务相关 开始-->
+        <g *ngFor="let item of tasks"
+           (mousedown)="rectMouseDownHandler($event, item)">
+          <g class="d-outline">
+            <rect [attr.width]="item.width" [attr.height]="item.height"
+                  [attr.x]="item.x" [attr.y]="item.y"
+                  [attr.rx]="12" [attr.fill]="item.mainColor"
                   stroke="black" stroke-width="2">
-          </circle>
+            </rect>
+            <text fill="black" text-anchor="middle" [attr.x]="item.x + (item.width / 2)"
+                  [attr.y]="item.y + 6 + (item.height / 2)" width="30"
+                  [attr.width]="item.width" [attr.height]="item.height">{{item.name}}
+            </text>
+          </g>
+          <rect [attr.width]="item.width + 2 * item.borderWidth" [attr.height]="item.height + 2 * item.borderWidth"
+                fill="none"
+                [attr.x]="item.x - item.borderWidth" [attr.y]="item.y - item.borderWidth"></rect>
         </g>
-        <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
-              [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
-      </g>
-      <!--开始相关 结束-->
+        <!--任务相关 结束-->
 
-      <!--结束相关 开始-->
-      <g *ngFor="let item of ends"
-         (mousedown)="rectMouseDownHandler($event, item)">
-        <g class="d-outline">
-          <circle [attr.r]="item.radius"
-                  [attr.cx]="item.x" [attr.cy]="item.y"
-                  [attr.fill]="item.mainColor"
-                  stroke="black" [attr.stroke-width]="item.strokeWidth">
-          </circle>
+
+        <!--开始相关 开始-->
+        <g *ngFor="let item of starts"
+           (mousedown)="rectMouseDownHandler($event, item)">
+          <g class="d-outline">
+            <circle [attr.r]="item.radius"
+                    [attr.cx]="item.x" [attr.cy]="item.y"
+                    [attr.fill]="item.mainColor"
+                    stroke="black" stroke-width="2">
+            </circle>
+          </g>
+          <rect [attr.width]="2 * item.radius + 2 * item.borderWidth"
+                [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
+                [attr.x]="item.x - item.borderWidth - item.radius"
+                [attr.y]="item.y - item.borderWidth - item.radius"></rect>
         </g>
-        <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
-              [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
-      </g>
-      <!--结束相关 结束-->
+        <!--开始相关 结束-->
 
-      <!--中继器 开始-->
-      <g *ngFor="let item of intermediates"
-         (mousedown)="rectMouseDownHandler($event, item)">
-        <g class="d-outline">
-          <circle [attr.r]="item.radius"
-                  [attr.cx]="item.x" [attr.cy]="item.y"
-                  [attr.fill]="item.mainColor"
-                  stroke="black" [attr.stroke-width]="item.strokeWidth">
-          </circle>
-
-          <circle [attr.r]="item.radiusInner"
-                  [attr.cx]="item.x" [attr.cy]="item.y"
-                  [attr.fill]="item.mainColor"
-                  stroke="black" [attr.stroke-width]="item.strokeWidth">
-          </circle>
+        <!--结束相关 开始-->
+        <g *ngFor="let item of ends"
+           (mousedown)="rectMouseDownHandler($event, item)">
+          <g class="d-outline">
+            <circle [attr.r]="item.radius"
+                    [attr.cx]="item.x" [attr.cy]="item.y"
+                    [attr.fill]="item.mainColor"
+                    stroke="black" [attr.stroke-width]="item.strokeWidth">
+            </circle>
+          </g>
+          <rect [attr.width]="2 * item.radius + 2 * item.borderWidth"
+                [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
+                [attr.x]="item.x - item.borderWidth - item.radius"
+                [attr.y]="item.y - item.borderWidth - item.radius"></rect>
         </g>
-        <rect [attr.width]="2 * item.radius + 2 * item.borderWidth" [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
-              [attr.x]="item.x - item.borderWidth - item.radius" [attr.y]="item.y - item.borderWidth - item.radius"></rect>
+        <!--结束相关 结束-->
+
+        <!--中继器 开始-->
+        <g *ngFor="let item of intermediates"
+           (mousedown)="rectMouseDownHandler($event, item)">
+          <g class="d-outline">
+            <circle [attr.r]="item.radius"
+                    [attr.cx]="item.x" [attr.cy]="item.y"
+                    [attr.fill]="item.mainColor"
+                    stroke="black" [attr.stroke-width]="item.strokeWidth">
+            </circle>
+
+            <circle [attr.r]="item.radiusInner"
+                    [attr.cx]="item.x" [attr.cy]="item.y"
+                    [attr.fill]="item.mainColor"
+                    stroke="black" [attr.stroke-width]="item.strokeWidth">
+            </circle>
+          </g>
+          <rect [attr.width]="2 * item.radius + 2 * item.borderWidth"
+                [attr.height]="2 * item.radius + 2 * item.borderWidth" fill="none"
+                [attr.x]="item.x - item.borderWidth - item.radius"
+                [attr.y]="item.y - item.borderWidth - item.radius"></rect>
+        </g>
+        <!--中继器 结束-->
+
+        <!--路由 开始-->
+        <g *ngFor="let item of getways"
+           (mousedown)="rectMouseDownHandler($event, item)">
+          <g class="d-outline">
+            <polygon fill="white" [attr.points]="[
+                      [item.x - 0.2 * item.width, item.y + 0.5 * item.height],
+                      [item.x + 0.5 * item.width, item.y + 1.2 * item.height],
+                      [item.x + 1.2 * item.width, item.y + 0.5 * item.height],
+                      [item.x + 0.5 * item.width, item.y - 0.2 * item.height]]"
+                     [attr.stroke]="'black'" [attr.stroke-width]="item.strokeWidth"></polygon>
+            <g>
+              <line
+                [attr.x1]="item.x + 4" [attr.x2]="item.x + item.width - 4"
+                [attr.y1]="item.y + 0.5 * item.height" [attr.y2]="item.y + 0.5 * item.height"
+                [attr.stroke]="'black'" [attr.stroke-width]="3"
+              ></line>
+
+              <line
+                [attr.x1]="item.x + 0.5 * item.width" [attr.x2]="item.x + 0.5 * item.width"
+                [attr.y1]="item.y + item.height - 4" [attr.y2]="item.y + 4"
+                [attr.stroke]="'black'" [attr.stroke-width]="3"
+              ></line>
+            </g>
+          </g>
+          <rect [attr.width]="1.5 * item.width + 2 * item.borderWidth"
+                [attr.height]="1.5 * item.height + 2 * item.borderWidth" fill="none"
+                [attr.x]="item.x - item.borderWidth - 0.25 * item.width"
+                [attr.y]="item.y - item.borderWidth - 0.25 * item.height"></rect>
+        </g>
+        <!--路由 结束-->
       </g>
-      <!--中继器 结束-->
 
       <!--移动组件 开始-->
       <g *ngIf="taskMove"
@@ -144,7 +184,8 @@
                 [attr.rx]="12" fill="white"
                 [attr.stroke]="taskMove.skin" stroke-width="2">
           </rect>
-          <text *ngIf="isShowText(taskMove)" [attr.fill]="taskMove.skin" text-anchor="middle" [attr.x]="taskMove.x + (taskMove.width / 2)"
+          <text *ngIf="isShowText(taskMove)" [attr.fill]="taskMove.skin" text-anchor="middle"
+                [attr.x]="taskMove.x + (taskMove.width / 2)"
                 [attr.y]="taskMove.y + 6 + (taskMove.height / 2)" width="30"
                 [attr.width]="taskMove.width" [attr.height]="taskMove.height">{{taskMove.name}}
           </text>
@@ -158,6 +199,28 @@
                   [attr.cx]="taskMove.x" [attr.cy]="taskMove.y" fill="white"
                   [attr.stroke]="taskMove.skin" [attr.stroke-width]="taskMove.strokeWidth">
           </circle>
+
+          <g *ngIf="isShowGetWay(taskMove)">
+            <polygon fill="white" [attr.points]="[
+                      [taskMove.x - 0.2 * taskMove.width, taskMove.y + 0.5 * taskMove.height],
+                      [taskMove.x + 0.5 * taskMove.width, taskMove.y + 1.2 * taskMove.height],
+                      [taskMove.x + 1.2 * taskMove.width, taskMove.y + 0.5 * taskMove.height],
+                      [taskMove.x + 0.5 * taskMove.width, taskMove.y - 0.2 * taskMove.height]]"
+                     [attr.stroke]="taskMove.skin" [attr.stroke-width]="taskMove.strokeWidth"></polygon>
+            <line
+              [attr.x1]="taskMove.x + 4" [attr.x2]="taskMove.x + taskMove.width - 4"
+              fill="white"
+              [attr.y1]="taskMove.y + 0.5 * taskMove.height" [attr.y2]="taskMove.y + 0.5 * taskMove.height"
+              [attr.stroke]="taskMove.skin" [attr.stroke-width]="3"
+            ></line>
+
+            <line
+              [attr.x1]="taskMove.x + 0.5 * taskMove.width" [attr.x2]="taskMove.x + 0.5 * taskMove.width"
+              [attr.y1]="taskMove.y + taskMove.height - 4" [attr.y2]="taskMove.y + 4"
+              fill="white"
+              [attr.stroke]="taskMove.skin" [attr.stroke-width]="3"
+            ></line>
+          </g>
         </g>
       </g>
       <!--移动组件 结束-->

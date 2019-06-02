@@ -16,7 +16,6 @@ export class End extends BaseEvent {
     } else {
       this.name = name;
     }
-    console.log(this.x, this.y);
   }
 
   setX(x: number): End {

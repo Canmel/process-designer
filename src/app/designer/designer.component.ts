@@ -44,6 +44,9 @@ export class DesignerComponent implements OnInit {
     positionX -= this.svgProperties.translateX;
     let positionY = e['nativeEvent']['offsetY'];
     positionY -= this.svgProperties.translateY;
+    positionY = positionY / this.svgProperties.scaleY;
+    positionX = positionX / this.svgProperties.scaleX;
+    console.log(positionX, positionY);
     switch (e.dragData) {
       case('start'):
         this.starts.push(new Start(positionX, positionY, ''));
@@ -91,6 +94,7 @@ export class DesignerComponent implements OnInit {
   }
 
   rectMouseDownHandler(e: any, item) {
+    console.log(e);
     this.selected = item;
     // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
     this.taskMove = this.copyNewInstance(item);
@@ -101,37 +105,40 @@ export class DesignerComponent implements OnInit {
    * @param item 模块对象
    */
   copyNewInstance(item) {
+    const trueX = item.x + this.svgProperties.translateX;
+    const trueY = item.y + this.svgProperties.translateY;
+    // trueX = trueX / this.svgProperties.scaleX;
+    // trueY = trueY / this.svgProperties.scaleY;
     // 当item的实际类型不同，可能有些属性需要自定义，这里不再直接使用超类，而是分成各个组件重新生成
     if (item instanceof Task) {
       const task = new Task(0, 0, item.name);
       // 在赋值x, y 的时候加上偏移量，偏移量初始值已设置为0
-      task.setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
+      task.setTrueX(trueX).setTrueY(trueY);
       return task;
     }
     if (item instanceof Start) {
       const start = new Start(0, 0, item.name);
-      start.setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
+      start.setTrueX(trueX).setTrueY(trueY);
       return start;
     }
     if (item instanceof End) {
       const end = new End(0, 0, item.name);
-      end.setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
+      end.setTrueX(trueX).setTrueY(trueY);
       return end;
     }
     if (item instanceof Intermediate) {
       const intermediate = new Intermediate(0, 0, item.name);
-      intermediate.setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
+      intermediate.setTrueX(trueX).setTrueY(trueY);
       return intermediate;
     }
     if (item instanceof Getway) {
       const getWay = new Getway(0, 0, item.name);
-      getWay.setTransForm(item.x, item.y).setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
+      getWay.setTransForm(item.x, item.y).setTrueX(trueX).setTrueY(trueY);
       return getWay;
     }
     if (item instanceof Pool) {
       const pool = new Pool(0, 0, item.name);
-      // 在赋值x, y 的时候加上偏移量，偏移量初始值已设置为0
-      pool.setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
+      pool.setTrueX(trueX).setTrueY(trueY);
       return pool;
     }
   }
@@ -157,13 +164,24 @@ export class DesignerComponent implements OnInit {
   }
 
   svgWheelHandler(event) {
-    this.svgProperties.translateX = this.svgProperties.translateX - event.deltaX;
-    this.svgProperties.translateY = this.svgProperties.translateY - event.deltaY;
+    console.log(event);
+    if (event.ctrlKey) {
+      if ((event.deltaX + event.deltaY) > 0) {
+        this.svgProperties.scaleX = this.svgProperties.scaleX - 0.01;
+        this.svgProperties.scaleY = this.svgProperties.scaleY - 0.01;
+      } else {
+        this.svgProperties.scaleX = this.svgProperties.scaleX + 0.01;
+        this.svgProperties.scaleY = this.svgProperties.scaleY + 0.01;
+      }
+    } else {
+      this.svgProperties.translateX = this.svgProperties.translateX - event.deltaX;
+      this.svgProperties.translateY = this.svgProperties.translateY - event.deltaY;
+    }
   }
 
 
   toCurrentPosition(e, item) {
-    item.setX(e['offsetX']).setY(e['offsetY']);
+    item.setX(e['offsetX'] / this.svgProperties.scaleX).setY(e['offsetY'] / this.svgProperties.scaleY);
   }
 
   toTrueCurrentPosition(e, item) {

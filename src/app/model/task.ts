@@ -15,6 +15,7 @@ export class Task extends BaseEvent {
     } else {
       this.name = name;
     }
+    console.log(this.x, this.y);
   }
 
   setX(x: number): Task {

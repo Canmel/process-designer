@@ -13,11 +13,6 @@ export class Getway extends BaseEvent {
     this.x = this.correctPosition(x, this.width);
     this.y = this.correctPosition(y, this.height);
     this.transform = 'rotate(45, ' + x + ', ' + y + ')';
-    if (name === undefined || name === '') {
-      this.name = '未命名任务';
-    } else {
-      this.name = name;
-    }
   }
 
   setTransForm(x: number, y: number): Getway {

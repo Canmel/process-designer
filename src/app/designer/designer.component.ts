@@ -82,13 +82,19 @@ export class DesignerComponent implements OnInit {
 
   rectMouseDownHandler(e: any, item) {
     this.selected = item;
+    // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
     this.taskMove = this.copyNewInstance(item);
-    console.log(this.svgProperties);
   }
 
+  /**
+   * 重新拷贝一个新的svg对象，避免angular 的双向绑定。使得确保可以生成一个移动任务模块
+   * @param item 模块对象
+   */
   copyNewInstance(item) {
+    // 当item的实际类型不同，可能有些属性需要自定义，这里不再直接使用超类，而是分成各个组件重新生成
     if (item instanceof Task) {
       const task = new Task(0, 0, item.name);
+      // 在赋值x, y 的时候加上偏移量，偏移量初始值已设置为0
       task.setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
       return task;
     }

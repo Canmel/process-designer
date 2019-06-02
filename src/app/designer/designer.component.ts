@@ -37,21 +37,25 @@ export class DesignerComponent implements OnInit {
   };
 
   onItemDrop(e: any) {
+    let positionX = e['nativeEvent']['offsetX'];
+    positionX -= this.svgProperties.translateX;
+    let positionY = e['nativeEvent']['offsetY'];
+    positionY -= this.svgProperties.translateY;
     switch (e.dragData) {
       case('start'):
-        this.starts.push(new Start(e['nativeEvent']['offsetX'], e['nativeEvent']['offsetY'], ''));
+        this.starts.push(new Start(positionX, positionY, ''));
         break;
       case('end'):
-        this.ends.push(new End(e['nativeEvent']['offsetX'], e['nativeEvent']['offsetY'], ''));
+        this.ends.push(new End(positionX, positionY, ''));
         break;
       case('task'):
-        this.tasks.push(new Task(e['nativeEvent']['offsetX'], e['nativeEvent']['offsetY'], ''));
+        this.tasks.push(new Task(positionX, positionY, ''));
         break;
       case('intermediates'):
-        this.intermediates.push(new Intermediate(e['nativeEvent']['offsetX'], e['nativeEvent']['offsetY'], ''));
+        this.intermediates.push(new Intermediate(positionX, positionY, ''));
         break;
       case('getway'):
-        this.getways.push(new Getway(e['nativeEvent']['offsetX'], e['nativeEvent']['offsetY'], ''));
+        this.getways.push(new Getway(positionX, positionY, ''));
         break;
       default :
     }
@@ -140,7 +144,7 @@ export class DesignerComponent implements OnInit {
     this.currentTip.message = '';
   }
 
-  test(event) {
+  svgWheelHandler(event) {
     this.svgProperties.translateX = this.svgProperties.translateX - event.deltaX;
     this.svgProperties.translateY = this.svgProperties.translateY - event.deltaY;
   }

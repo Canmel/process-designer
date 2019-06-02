@@ -6,6 +6,7 @@ import {End} from '../model/end';
 import {Intermediate} from '../model/intermediate';
 import {BaseEvent} from '../model/base-event';
 import {Getway} from '../model/getway';
+import {Pool} from '../model/pool';
 
 @Component({
   selector: 'app-designer',
@@ -23,6 +24,8 @@ export class DesignerComponent implements OnInit {
   intermediates: Array<Intermediate> = [];
 
   getways: Array<Getway> = [];
+
+  pools: Array<Pool> = [];
 
   currentTip: ToolTip = new ToolTip('', 0, 0);
 
@@ -56,6 +59,9 @@ export class DesignerComponent implements OnInit {
         break;
       case('getway'):
         this.getways.push(new Getway(positionX, positionY, ''));
+        break;
+      case ('pool'):
+        this.pools.push(new Pool(positionX, positionY, ''));
         break;
       default :
     }
@@ -121,6 +127,12 @@ export class DesignerComponent implements OnInit {
       const getWay = new Getway(0, 0, item.name);
       getWay.setTransForm(item.x, item.y).setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
       return getWay;
+    }
+    if (item instanceof Pool) {
+      const pool = new Pool(0, 0, item.name);
+      // 在赋值x, y 的时候加上偏移量，偏移量初始值已设置为0
+      pool.setTrueX(item.x + this.svgProperties.translateX).setTrueY(item.y + this.svgProperties.translateY);
+      return pool;
     }
   }
 
@@ -198,6 +210,13 @@ export class DesignerComponent implements OnInit {
 
   isShowGetWay(item: BaseEvent): boolean {
     if (item instanceof Getway) {
+      return true;
+    }
+    return false;
+  }
+
+  isShowPool(item: BaseEvent): boolean {
+    if (item instanceof Pool) {
       return true;
     }
     return false;

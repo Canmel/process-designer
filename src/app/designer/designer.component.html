@@ -7,15 +7,18 @@
             <svg width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个开始组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-              <ellipse stroke="#000" ry="16.785761" rx="16.857173" cy="21.357138" cx="21.000001" stroke-width="1.5" fill="#fff"/>
+              <ellipse stroke="#000" ry="16.785761" rx="16.857173" cy="21.357138" cx="21.000001" stroke-width="1.5"
+                       fill="#fff"/>
             </svg>
           </div>
           <div draggable [dragData]="'intermediates'">
             <svg width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个中继组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-              <ellipse stroke="#000" ry="17.142898" rx="16.857173" cy="21" cx="20.999999" stroke-width="1.5" fill="#fff"/>
-              <ellipse stroke="#000" ry="13.571235" rx="13.571236" cy="20.999999" cx="21.000001" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="#fff"/>
+              <ellipse stroke="#000" ry="17.142898" rx="16.857173" cy="21" cx="20.999999" stroke-width="1.5"
+                       fill="#fff"/>
+              <ellipse stroke="#000" ry="13.571235" rx="13.571236" cy="20.999999" cx="21.000001" fill-opacity="null"
+                       stroke-opacity="null" stroke-width="1.5" fill="#fff"/>
 
             </svg>
           </div>
@@ -24,11 +27,17 @@
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个排它网关组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
               <g>
-                <rect height="0.714276" width="0" y="87.025846" x="574.920652" fill-opacity="null" stroke-opacity="null" stroke="#000" fill="#fff"/>
-                <path d="m29.214148,15.598293" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="NaN" stroke="#000" fill="#fff"/>
-                <rect stroke="#000" transform="rotate(-45 21.153844833374016,20.375) " height="22.966811" width="22.711909" y="8.891594" x="9.79789" fill-opacity="null" stroke-opacity="null" stroke-width="NaN" fill="#fff"/>
-                <line stroke="#000" y2="25.836538" x2="27.230769" y1="14.451923" x1="15.230769" fill-opacity="null" stroke-opacity="null" stroke-width="NaN" fill="none"/>
-                <line y2="14.451923" x2="26.769231" y1="25.221154" x1="16" fill-opacity="null" stroke-opacity="null" stroke-width="NaN" stroke="#000" fill="none"/>
+                <rect height="0.714276" width="0" y="87.025846" x="574.920652" fill-opacity="null" stroke-opacity="null"
+                      stroke="#000" fill="#fff"/>
+                <path d="m29.214148,15.598293" opacity="0.5" fill-opacity="null" stroke-opacity="null"
+                      stroke-width="2" stroke="#000" fill="#fff"/>
+                <rect stroke="#000" transform="rotate(-45 21.153844833374016,20.375) " height="22.966811"
+                      width="22.711909" y="8.891594" x="9.79789" fill-opacity="null" stroke-opacity="null"
+                      stroke-width="2" fill="#fff"/>
+                <line stroke="#000" y2="25.836538" x2="27.230769" y1="14.451923" x1="15.230769" fill-opacity="null"
+                      stroke-opacity="null" stroke-width="2" fill="none"/>
+                <line y2="14.451923" x2="26.769231" y1="25.221154" x1="16" fill-opacity="null" stroke-opacity="null"
+                      stroke-width="2" stroke="#000" fill="none"/>
               </g>
             </svg>
           </div>
@@ -45,7 +54,20 @@
             <svg width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个任务组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-              <rect stroke="#000" id="svg_10" height="24.856817" rx="4" width="30.713848" y="9.571592" x="5.643076" fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="#fff"/>
+              <rect stroke="#000" id="svg_10" height="24.856817" rx="4" width="30.713848" y="9.571592" x="5.643076"
+                    fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="#fff"/>
+            </svg>
+          </div>
+
+          <div draggable [dragData]="'pool'">
+            <svg width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 (mousemove)="toolsMouseMoveHandler($event, '创建一个泳道组件')" (mouseout)="toolsMouseOutHandler()"
+                 style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+              <rect id="svg_26" height="22.615385" width="36" y="9.528846" x="3.076923" fill-opacity="null"
+                    stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+              <line id="svg_30" y2="31.836538" x2="9.538462" y1="9.836538"
+                    x1="9.384615" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000"
+                    fill="none"/>
             </svg>
           </div>
         </nz-col>
@@ -63,7 +85,7 @@
     <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"
          (mousemove)="rectMouseMoveHandler($event)" (wheel)="svgWheelHandler($event)"
          style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-      <g [attr.transform]="'translate('+ svgProperties.translateX + ', ' + svgProperties.translateY + ')'" >
+      <g [attr.transform]="'translate('+ svgProperties.translateX + ', ' + svgProperties.translateY + ')'">
         <!--任务相关 开始-->
         <g *ngFor="let item of tasks"
            (mousedown)="rectMouseDownHandler($event, item)">
@@ -172,6 +194,23 @@
                 [attr.y]="item.y - item.borderWidth - 0.25 * item.height"></rect>
         </g>
         <!--路由 结束-->
+
+        <g *ngFor="let item of pools"
+           (mousedown)="rectMouseDownHandler($event, item)">
+          <g class="d-outline">
+            <rect [attr.width]="item.width" [attr.height]="item.height"
+                  [attr.x]="item.x" [attr.y]="item.y"
+                  [attr.fill]="item.mainColor"
+                  stroke="black" stroke-width="2">
+            </rect>
+            <line [attr.x1]="item.x + item.twidth" [attr.y1]="item.y"
+                  [attr.x2]="item.x + item.twidth" [attr.y2]="item.y + item.height"
+                  [attr.stroke]="'black'" [attr.stroke-width]="2"></line>
+          </g>
+          <rect [attr.width]="item.width + 2 * item.borderWidth" [attr.height]="item.height + 2 * item.borderWidth"
+                fill="none"
+                [attr.x]="item.x - item.borderWidth" [attr.y]="item.y - item.borderWidth"></rect>
+        </g>
       </g>
 
       <!--移动组件 开始-->
@@ -217,6 +256,17 @@
               [attr.y1]="taskMove.y + 0.75 * taskMove.height" [attr.y2]="taskMove.y + 0.25 * taskMove.height"
               [attr.stroke]="taskMove.skin" [attr.stroke-width]="3"
             ></line>
+          </g>
+
+          <g *ngIf="isShowPool(taskMove)">
+            <rect [attr.width]="taskMove.width" [attr.height]="taskMove.height"
+                  [attr.x]="taskMove.x" [attr.y]="taskMove.y"
+                  [attr.fill]="taskMove.mainColor"
+                  [attr.stroke]="taskMove.skin" [attr.stroke-width]="2">
+            </rect>
+            <line [attr.x1]="taskMove.x + taskMove.twidth" [attr.y1]="taskMove.y"
+                  [attr.x2]="taskMove.x + taskMove.twidth" [attr.y2]="taskMove.y + taskMove.height"
+                  [attr.stroke]="taskMove.skin" [attr.stroke-width]="2"></line>
           </g>
         </g>
       </g>

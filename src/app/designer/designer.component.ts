@@ -7,6 +7,7 @@ import {Intermediate} from '../model/intermediate';
 import {BaseEvent} from '../model/base-event';
 import {Getway} from '../model/getway';
 import {Pool} from '../model/pool';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-designer',
@@ -36,17 +37,22 @@ export class DesignerComponent implements OnInit {
     scaleY: 1.0,
     // 平移量
     translateX: 0,
-    translateY: 0
+    translateY: 0,
+    width: 300,
+    height: 200,
+    cursor: 'pointer',
+    drag: false
   };
 
   onItemDrop(e: any) {
     let positionX = e['nativeEvent']['offsetX'];
+    positionX = positionX * this.svgProperties.scaleX;
     positionX -= this.svgProperties.translateX;
     let positionY = e['nativeEvent']['offsetY'];
+    positionY = positionY * this.svgProperties.scaleY;
     positionY -= this.svgProperties.translateY;
-    positionY = positionY / this.svgProperties.scaleY;
-    positionX = positionX / this.svgProperties.scaleX;
-    console.log(positionX, positionY);
+
+    console.log('新建位置', positionX, positionY);
     switch (e.dragData) {
       case('start'):
         this.starts.push(new Start(positionX, positionY, ''));
@@ -74,6 +80,19 @@ export class DesignerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.svgProperties.width = $('#designer-content').width();
+    this.svgProperties.height = $('#designer-content').height();
+  }
+
+  svgMouseDownHandler(e) {
+    this.svgProperties.drag = true;
+    console.log(this.svgProperties);
+    console.log('画布位置', e.offsetX, e.offsetY);
+  }
+
+  svgMouseUpHandler($event) {
+    this.svgProperties.drag = false;
+    console.log(this.svgProperties.drag);
   }
 
   rectMouseUpHandler(e) {
@@ -84,12 +103,18 @@ export class DesignerComponent implements OnInit {
     this.taskMove = null;
   }
 
-  rectMouseMoveHandler(e) {
+  svgMouseMoveHandler(e) {
     if (this.taskMove) {
       if (this.taskMove instanceof Getway) {
         this.taskMove.setTransForm(e['offsetY'], e['offsetX']);
       }
       this.toCurrentPosition(e, this.taskMove);
+    } else {
+      if (this.svgProperties.drag) {
+        console.log(e);
+        this.svgProperties.translateX += e.movementX;
+        this.svgProperties.translateY += e.movementY;
+      }
     }
   }
 
@@ -167,21 +192,24 @@ export class DesignerComponent implements OnInit {
     console.log(event);
     if (event.ctrlKey) {
       if ((event.deltaX + event.deltaY) > 0) {
-        this.svgProperties.scaleX = this.svgProperties.scaleX - 0.01;
-        this.svgProperties.scaleY = this.svgProperties.scaleY - 0.01;
+        this.svgProperties.scaleX = this.svgProperties.scaleX - 0.03;
+        this.svgProperties.scaleY = this.svgProperties.scaleY - 0.03;
       } else {
-        this.svgProperties.scaleX = this.svgProperties.scaleX + 0.01;
-        this.svgProperties.scaleY = this.svgProperties.scaleY + 0.01;
+        this.svgProperties.scaleX = this.svgProperties.scaleX + 0.03;
+        this.svgProperties.scaleY = this.svgProperties.scaleY + 0.03;
       }
     } else {
       this.svgProperties.translateX = this.svgProperties.translateX - event.deltaX;
       this.svgProperties.translateY = this.svgProperties.translateY - event.deltaY;
     }
+    event.stopPropagation();
+    return false;
   }
 
 
   toCurrentPosition(e, item) {
-    item.setX(e['offsetX'] / this.svgProperties.scaleX).setY(e['offsetY'] / this.svgProperties.scaleY);
+    console.log('前往目标点：', e.offsetX, e.offsetY);
+    item.setX(e['offsetX'] * this.svgProperties.scaleX).setY(e['offsetY'] * this.svgProperties.scaleY);
   }
 
   toTrueCurrentPosition(e, item) {
@@ -238,6 +266,10 @@ export class DesignerComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  consolePosition(e) {
+    console.log(e.offsetX, e.offsetY);
   }
 
 }

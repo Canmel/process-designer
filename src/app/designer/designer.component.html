@@ -290,7 +290,7 @@
 
     <div class="svg-tools" (wheel)="wheelTools($event)" [ngStyle]="{'left': selected.horizontal() / svgProperties.scaleX + svgProperties.translateX + 'px', top: selected.longitudinal() / svgProperties.scaleY + svgProperties.translateY + 'px'}" *ngIf="selected">
       <div *ngIf="selected && selected.showTools"><i nz-icon nzType="arrow-right" nzTheme="outline" (click)="showTransition($event)"></i></div>
-      <div *ngIf="selected && selected.showTools"><i nz-icon nzType="delete" nzTheme="fill"></i></div>
+      <div *ngIf="selected && selected.showTools"><i nz-icon nzType="delete" nzTheme="fill" (click)="toolDeleteHandler($event)"></i></div>
     </div>
 
   </div>

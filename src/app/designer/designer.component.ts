@@ -210,6 +210,13 @@ export class DesignerComponent implements OnInit {
     this.currentTip.message = '';
   }
 
+  toolDeleteHandler(e) {
+    const items = this.getItemsArray(this.selected);
+    const index = items.indexOf(this.selected);
+    items.splice(index, 1);
+    this.selected = null;
+  }
+
   svgWheelHandler(event) {
     if (event.ctrlKey) {
       if ((event.deltaX + event.deltaY) > 0) {
@@ -295,5 +302,26 @@ export class DesignerComponent implements OnInit {
   wheelTools(e) {
     e.stopPropagation();
     return false;
+  }
+
+  getItemsArray(item): Array<BaseEvent> {
+    if (item instanceof Start) {
+      return this.starts;
+    }
+    if (item instanceof End) {
+      return this.ends;
+    }
+    if (item instanceof Task) {
+      return this.tasks;
+    }
+    if (item instanceof Getway) {
+      return this.getways;
+    }
+    if (item instanceof Intermediate) {
+      return this.intermediates;
+    }
+    if (item instanceof Pool) {
+      return this.pools;
+    }
   }
 }

@@ -85,7 +85,7 @@
          [attr.viewBox]="[0, 0, svgProperties.width * svgProperties.scaleX, svgProperties.height * svgProperties.scaleY]"
          (mousemove)="svgMouseMoveHandler($event)" (wheel)="svgWheelHandler($event)">
       <g>
-        <g [attr.transform]="'translate('+ svgProperties.translateX + ', ' + svgProperties.translateY + ')'">
+        <g [attr.transform]="'translate('+ svgProperties.translateX * svgProperties.scaleX + ', ' + svgProperties.translateY * svgProperties.scaleY + ')'">
           <!--任务相关 开始-->
           <g *ngFor="let item of tasks"
              (mousedown)="rectMouseDownHandler($event, item)">

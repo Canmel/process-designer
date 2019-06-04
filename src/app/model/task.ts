@@ -18,6 +18,15 @@ export class Task extends BaseEvent {
     console.log(this.x, this.y);
   }
 
+
+  horizontal(): number {
+    return this.width + this.x + this.borderWidth;
+  }
+
+  longitudinal(): number {
+    return this.height + this.y;
+  }
+
   setX(x: number): Task {
     this.x = this.correctPosition(x, this.width);
     return this;

@@ -19,6 +19,14 @@ export class Pool extends BaseEvent {
     }
   }
 
+  horizontal(): number {
+    return this.width + this.x;
+  }
+
+  longitudinal(): number {
+    return this.height + this.y + this.borderWidth;
+  }
+
   setX(x: number): Pool {
     this.x = this.correctPosition(x, this.width);
     return this;

@@ -100,6 +100,7 @@
                     [attr.width]="item.width" [attr.height]="item.height">{{item.name}}
               </text>
             </g>
+            <line [attr.x1]="100" [attr.y1]="100" [attr.x2]="300" [attr.y2]="400" [attr.stroke-width]="2" [attr.stroke]="'red'"></line>
             <rect [attr.width]="item.width + 2 * item.borderWidth" [attr.height]="item.height + 2 * item.borderWidth"
                   fill="none"
                   [attr.x]="item.x - item.borderWidth" [attr.y]="item.y - item.borderWidth"></rect>
@@ -110,6 +111,11 @@
           <!--开始相关 开始-->
           <g *ngFor="let item of starts"
              (mousedown)="rectMouseDownHandler($event, item)">
+            <line
+              [attr.x1]="transitionLine.x" [attr.y1]="transitionLine.y" [attr.stroke-dasharray]="[2, 3]"
+              [attr.x2]="transitionLine.terminalX" [attr.y2]="transitionLine.terminalY"
+              [attr.stroke-width]="transitionLine.strokeWidth" [attr.stroke]="transitionLine.stroke"
+              *ngIf="transitionLine"></line>
             <g class="d-outline">
               <circle [attr.r]="item.radius"
                       [attr.cx]="item.x" [attr.cy]="item.y"
@@ -272,14 +278,19 @@
         </g>
         <!--移动组件 结束-->
 
-        <!--工具组件 开始-->
-        <g *ngIf="selected && selected.showTools">
-          <rect [attr.x]="selected.x" [attr.y]="selected.y" width="30" height="30"></rect>
-        </g>
-        <!--工具组件 结束-->
+        <!--&lt;!&ndash;工具组件 开始&ndash;&gt;-->
+        <!--<g *ngIf="selected && selected.showTools">-->
+          <!--<rect [attr.x]="selected.horizontal()" [attr.y]="selected.longitudinal()" width="30" height="30"></rect>-->
+        <!--</g>-->
+        <!--&lt;!&ndash;工具组件 结束&ndash;&gt;-->
       </g>
 
     </svg>
+
+    <div class="svg-tools" [ngStyle]="{'left': selected.horizontal() + 'px', top: selected.longitudinal() + 'px'}" *ngIf="selected">
+      <div *ngIf="selected && selected.showTools"><i nz-icon nzType="arrow-right" nzTheme="outline" (click)="showTransition($event)"></i></div>
+      <div *ngIf="selected && selected.showTools"><i nz-icon nzType="delete" nzTheme="fill"></i></div>
+    </div>
 
   </div>
 </div>

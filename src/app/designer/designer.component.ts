@@ -8,6 +8,7 @@ import {BaseEvent} from '../model/base-event';
 import {Getway} from '../model/getway';
 import {Pool} from '../model/pool';
 import * as $ from 'jquery';
+import {TransitionLine} from '../model/transition-line';
 
 @Component({
   selector: 'app-designer',
@@ -32,6 +33,8 @@ export class DesignerComponent implements OnInit {
 
   selected = null;
 
+  transitionLine: TransitionLine = null;
+
   svgProperties = {
     scaleX: 1.0,
     scaleY: 1.0,
@@ -41,7 +44,9 @@ export class DesignerComponent implements OnInit {
     width: 300,
     height: 200,
     cursor: 'pointer',
-    drag: false
+    drag: false,
+    cursorX: 0,
+    cursorY: 0
   };
 
   onItemDrop(e: any) {
@@ -86,6 +91,7 @@ export class DesignerComponent implements OnInit {
 
   svgMouseDownHandler(e) {
     this.svgProperties.drag = true;
+    this.transitionLine = null;
     console.log(this.svgProperties);
     console.log('画布位置', e.offsetX, e.offsetY);
   }
@@ -104,6 +110,12 @@ export class DesignerComponent implements OnInit {
   }
 
   svgMouseMoveHandler(e) {
+    this.svgProperties.cursorX = e['offsetX'];
+    this.svgProperties.cursorY = e['offsetY'];
+    if (this.transitionLine) {
+      this.transitionLine.terminalX = e['offsetX'];
+      this.transitionLine.terminalY = e['offsetY'];
+    }
     if (this.taskMove) {
       if (this.taskMove instanceof Getway) {
         this.taskMove.setTransForm(e['offsetY'], e['offsetX']);
@@ -120,8 +132,18 @@ export class DesignerComponent implements OnInit {
 
   rectMouseDownHandler(e: any, item) {
     console.log(e);
-    this.selected = item;
-    this.selected.showTools = !this.selected.showTools;
+    if (this.selected === item) {
+      this.selected = item;
+      this.selected.showTools = !this.selected.showTools;
+    } else {
+      this.selected = item;
+      this.selected.showTools = true;
+    }
+
+    // if (this.selected && this.selected.showTools) {
+    //   $('.svg-tools').css('left', this.selected.horizontal());
+    //   $('.svg-tools').css('top', this.selected.longitudinal());
+    // }
     // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
     this.taskMove = this.copyNewInstance(item);
   }
@@ -206,6 +228,9 @@ export class DesignerComponent implements OnInit {
     return false;
   }
 
+  showTransition(e) {
+    this.transitionLine = new TransitionLine(this.selected.x, this.selected.y, this.svgProperties.cursorX, this.svgProperties.cursorY);
+  }
 
   toCurrentPosition(e, item) {
     console.log('前往目标点：', e.offsetX, e.offsetY);
@@ -267,9 +292,4 @@ export class DesignerComponent implements OnInit {
     }
     return false;
   }
-
-  consolePosition(e) {
-    console.log(e.offsetX, e.offsetY);
-  }
-
 }

@@ -16,6 +16,14 @@ export class BaseEvent {
     this.borderWidth = 3;
   }
 
+  horizontal(): number {
+    return 0;
+  }
+
+  longitudinal(): number {
+    return 0;
+  }
+
   setTrueX(x: number): BaseEvent {
     this.x = x;
     return this;

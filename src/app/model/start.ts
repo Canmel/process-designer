@@ -19,6 +19,14 @@ export class Start extends BaseEvent {
     console.log(this.x, this.y);
   }
 
+  horizontal(): number {
+    return this.radius + this.x + this.borderWidth + this.strokeWidth;
+  }
+
+  longitudinal(): number {
+    return this.y - 2 * this.radius;
+  }
+
   setX(x: number): Start {
     this.x = this.correctPosition(x, 0);
     return this;

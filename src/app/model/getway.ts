@@ -15,6 +15,15 @@ export class Getway extends BaseEvent {
     this.transform = 'rotate(45, ' + x + ', ' + y + ')';
   }
 
+
+  horizontal(): number {
+    return this.x + 1.5 * this.width + this.borderWidth;
+  }
+
+  longitudinal(): number {
+    return this.y + 1.5 * this.height;
+  }
+
   setTransForm(x: number, y: number): Getway {
     this.transform = 'rotate(45, ' + x + ', ' + y + ')';
     return this;

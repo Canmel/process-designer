@@ -18,6 +18,15 @@ export class End extends BaseEvent {
     }
   }
 
+
+  horizontal(): number {
+    return this.radius + this.x + this.strokeWidth + this.borderWidth;
+  }
+
+  longitudinal(): number {
+    return this.radius + this.y;
+  }
+
   setX(x: number): End {
     this.x = x;
     return this;

@@ -16,10 +16,19 @@ export class Intermediate extends BaseEvent{
     this.x = x;
     this.y = y;
     if (name === undefined || name === '') {
-      this.name = '结束';
+      this.name = '中继';
     } else {
       this.name = name;
     }
+  }
+
+
+  horizontal(): number {
+    return this.radius + this.x + this.borderWidth + this.strokeWidth;
+  }
+
+  longitudinal(): number {
+    return this.radius + this.y;
   }
 
   setX(x: number): Intermediate {

@@ -121,6 +121,7 @@ export class DesignerComponent implements OnInit {
   rectMouseDownHandler(e: any, item) {
     console.log(e);
     this.selected = item;
+    this.selected.showTools = !this.selected.showTools;
     // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
     this.taskMove = this.copyNewInstance(item);
   }
@@ -189,14 +190,13 @@ export class DesignerComponent implements OnInit {
   }
 
   svgWheelHandler(event) {
-    console.log(event);
     if (event.ctrlKey) {
       if ((event.deltaX + event.deltaY) > 0) {
-        this.svgProperties.scaleX = this.svgProperties.scaleX - 0.03;
-        this.svgProperties.scaleY = this.svgProperties.scaleY - 0.03;
+        this.svgProperties.scaleX += 0.03;
+        this.svgProperties.scaleY += 0.03;
       } else {
-        this.svgProperties.scaleX = this.svgProperties.scaleX + 0.03;
-        this.svgProperties.scaleY = this.svgProperties.scaleY + 0.03;
+        this.svgProperties.scaleX -= 0.03;
+        this.svgProperties.scaleY -= 0.03;
       }
     } else {
       this.svgProperties.translateX = this.svgProperties.translateX - event.deltaX;

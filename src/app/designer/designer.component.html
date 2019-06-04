@@ -271,6 +271,12 @@
           </g>
         </g>
         <!--移动组件 结束-->
+
+        <!--工具组件 开始-->
+        <g *ngIf="selected && selected.showTools">
+          <rect [attr.x]="selected.x" [attr.y]="selected.y" width="30" height="30"></rect>
+        </g>
+        <!--工具组件 结束-->
       </g>
 
     </svg>

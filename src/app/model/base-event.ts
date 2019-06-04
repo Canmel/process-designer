@@ -6,11 +6,13 @@ export class BaseEvent {
   selected: boolean;
   borderWidth: number;
   skin: string;
+  showTools: boolean;
 
   constructor() {
     this.mainColor = '#fff';
     this.skin = '#faad14';
     this.selected = false;
+    this.showTools = false;
     this.borderWidth = 3;
   }
 

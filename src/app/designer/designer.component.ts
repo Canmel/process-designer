@@ -123,7 +123,6 @@ export class DesignerComponent implements OnInit {
       this.toCurrentPosition(e, this.taskMove);
     } else {
       if (this.svgProperties.drag) {
-        console.log(e);
         this.svgProperties.translateX += e.movementX;
         this.svgProperties.translateY += e.movementY;
       }
@@ -290,6 +289,11 @@ export class DesignerComponent implements OnInit {
     if (item instanceof Pool) {
       return true;
     }
+    return false;
+  }
+
+  wheelTools(e) {
+    e.stopPropagation();
     return false;
   }
 }

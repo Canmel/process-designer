@@ -1,6 +1,7 @@
 .designer-background {
   height: 800px;
   background-color: #efefef;
+  overflow: hidden;
 }
 
 .tools-background {

@@ -3,41 +3,41 @@
     <nz-card [nzBordered]="true" nzTitle="工具栏" [nzExtra]="extraTemplate" class="tools-background" style="padding: 0px">
       <div nz-row style="height: 100%;">
         <nz-col nz-col nzSpan="12" class="tool-panel-left">
-          <div draggable [dragData]="'start'">
+          <div draggable="true" [dragData]="'start'">
             <svg width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个开始组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
               <ellipse stroke="#000" ry="16.785761" rx="16.857173" cy="21.357138" cx="21.000001" stroke-width="1.5"
-                       fill="#fff"/>
+                       fill="#fff"></ellipse>
             </svg>
           </div>
-          <div draggable [dragData]="'intermediates'">
+          <div draggable="true" [dragData]="'intermediates'">
             <svg width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个中继组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
               <ellipse stroke="#000" ry="17.142898" rx="16.857173" cy="21" cx="20.999999" stroke-width="1.5"
-                       fill="#fff"/>
+                       fill="#fff"></ellipse>
               <ellipse stroke="#000" ry="13.571235" rx="13.571236" cy="20.999999" cx="21.000001" fill-opacity="null"
-                       stroke-opacity="null" stroke-width="1.5" fill="#fff"/>
+                       stroke-opacity="null" stroke-width="1.5" fill="#fff"></ellipse>
 
             </svg>
           </div>
-          <div draggable [dragData]="'getway'">
+          <div draggable="true" [dragData]="'getway'">
             <svg width="40" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个排它网关组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
               <g>
                 <rect height="0.714276" width="0" y="87.025846" x="574.920652" fill-opacity="null" stroke-opacity="null"
-                      stroke="#000" fill="#fff"/>
+                      stroke="#000" fill="#fff"></rect>
                 <path d="m29.214148,15.598293" opacity="0.5" fill-opacity="null" stroke-opacity="null"
-                      stroke-width="2" stroke="#000" fill="#fff"/>
+                      stroke-width="2" stroke="#000" fill="#fff"></path>
                 <rect stroke="#000" transform="rotate(-45 21.153844833374016,20.375) " height="22.966811"
                       width="22.711909" y="8.891594" x="9.79789" fill-opacity="null" stroke-opacity="null"
-                      stroke-width="2" fill="#fff"/>
+                      stroke-width="2" fill="#fff"></rect>
                 <line stroke="#000" y2="25.836538" x2="27.230769" y1="14.451923" x1="15.230769" fill-opacity="null"
-                      stroke-opacity="null" stroke-width="2" fill="none"/>
+                      stroke-opacity="null" stroke-width="2" fill="none"></line>
                 <line y2="14.451923" x2="26.769231" y1="25.221154" x1="16" fill-opacity="null" stroke-opacity="null"
-                      stroke-width="2" stroke="#000" fill="none"/>
+                      stroke-width="2" stroke="#000" fill="none"></line>
               </g>
             </svg>
           </div>
@@ -47,7 +47,7 @@
             <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个结束组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-              <ellipse stroke="#000" ry="15.000072" rx="14.714345" cy="21" cx="21" stroke-width="5" fill="#fff"/>
+              <ellipse stroke="#000" ry="15.000072" rx="14.714345" cy="21" cx="21" stroke-width="5" fill="#fff"></ellipse>
             </svg>
           </div>
           <div draggable [dragData]="'task'">
@@ -55,7 +55,7 @@
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个任务组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
               <rect stroke="#000" id="svg_10" height="24.856817" rx="4" width="30.713848" y="9.571592" x="5.643076"
-                    fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="#fff"/>
+                    fill-opacity="null" stroke-opacity="null" stroke-width="2" fill="#fff"></rect>
             </svg>
           </div>
 
@@ -64,10 +64,10 @@
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个泳道组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
               <rect id="svg_26" height="22.615385" width="36" y="9.528846" x="3.076923" fill-opacity="null"
-                    stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"/>
+                    stroke-opacity="null" stroke-width="2" stroke="#000" fill="none"></rect>
               <line id="svg_30" y2="31.836538" x2="9.538462" y1="9.836538"
                     x1="9.384615" fill-opacity="null" stroke-opacity="null" stroke-width="2" stroke="#000"
-                    fill="none"/>
+                    fill="none"></line>
             </svg>
           </div>
         </nz-col>

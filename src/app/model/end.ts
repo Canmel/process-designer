@@ -24,7 +24,7 @@ export class End extends BaseEvent {
   }
 
   longitudinal(): number {
-    return this.radius + this.y;
+    return this.y - 2 * this.radius;
   }
 
   setX(x: number): End {

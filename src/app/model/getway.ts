@@ -21,7 +21,7 @@ export class Getway extends BaseEvent {
   }
 
   longitudinal(): number {
-    return this.y + 1.5 * this.height;
+    return this.y - this.height;
   }
 
   setTransForm(x: number, y: number): Getway {
@@ -42,5 +42,13 @@ export class Getway extends BaseEvent {
   // 位置斧正
   correctPosition(p: number, length: number): number {
     return p - (length / 2);
+  }
+
+  centerX(): number {
+    return this.x + 0.5 * this.width;
+  }
+
+  centerY(): number {
+    return this.y + 0.5 * this.height;
   }
 }

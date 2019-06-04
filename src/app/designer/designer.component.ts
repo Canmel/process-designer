@@ -235,7 +235,10 @@ export class DesignerComponent implements OnInit {
   }
 
   showTransition(e) {
-    this.transitionLine = new TransitionLine(this.selected.x, this.selected.y, this.svgProperties.cursorX, this.svgProperties.cursorY);
+    this.selected.showTools = false;
+    this.transitionLine = new TransitionLine(this.selected.centerX(),
+      this.selected.centerY(),
+      this.svgProperties.cursorX, this.svgProperties.cursorY);
   }
 
   toCurrentPosition(e, item) {

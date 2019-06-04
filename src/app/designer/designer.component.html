@@ -86,9 +86,18 @@
          (mousemove)="svgMouseMoveHandler($event)" (wheel)="svgWheelHandler($event)">
       <g>
         <g [attr.transform]="'translate('+ svgProperties.translateX * svgProperties.scaleX + ', ' + svgProperties.translateY * svgProperties.scaleY + ')'">
+          <g>
+            <line
+              [attr.x1]="transitionLine.x" [attr.y1]="transitionLine.y" [attr.stroke-dasharray]="[2, 3]"
+              [attr.x2]="svgProperties.scaleX * (transitionLine.terminalX - svgProperties.translateX)"
+              [attr.y2]="svgProperties.scaleY * (transitionLine.terminalY - svgProperties.translateY)"
+              [attr.stroke-width]="transitionLine.strokeWidth" [attr.stroke]="transitionLine.stroke"
+              *ngIf="transitionLine"></line>
+          </g>
           <!--任务相关 开始-->
           <g *ngFor="let item of tasks"
              (mousedown)="rectMouseDownHandler($event, item)">
+
             <g class="d-outline">
               <rect [attr.width]="item.width" [attr.height]="item.height"
                     [attr.x]="item.x" [attr.y]="item.y"
@@ -100,7 +109,6 @@
                     [attr.width]="item.width" [attr.height]="item.height">{{item.name}}
               </text>
             </g>
-            <line [attr.x1]="100" [attr.y1]="100" [attr.x2]="300" [attr.y2]="400" [attr.stroke-width]="2" [attr.stroke]="'red'"></line>
             <rect [attr.width]="item.width + 2 * item.borderWidth" [attr.height]="item.height + 2 * item.borderWidth"
                   fill="none"
                   [attr.x]="item.x - item.borderWidth" [attr.y]="item.y - item.borderWidth"></rect>
@@ -111,12 +119,6 @@
           <!--开始相关 开始-->
           <g *ngFor="let item of starts"
              (mousedown)="rectMouseDownHandler($event, item)">
-            <line
-              [attr.x1]="transitionLine.x" [attr.y1]="transitionLine.y" [attr.stroke-dasharray]="[2, 3]"
-              [attr.x2]="svgProperties.scaleX * (transitionLine.terminalX - svgProperties.translateX)"
-              [attr.y2]="svgProperties.scaleY * (transitionLine.terminalY - svgProperties.translateY)"
-              [attr.stroke-width]="transitionLine.strokeWidth" [attr.stroke]="transitionLine.stroke"
-              *ngIf="transitionLine"></line>
             <g class="d-outline">
               <circle [attr.r]="item.radius"
                       [attr.cx]="item.x" [attr.cy]="item.y"
@@ -288,9 +290,9 @@
 
     </svg>
 
-    <div class="svg-tools" (wheel)="wheelTools($event)" [ngStyle]="{'left': selected.horizontal() / svgProperties.scaleX + svgProperties.translateX + 'px', top: selected.longitudinal() / svgProperties.scaleY + svgProperties.translateY + 'px'}" *ngIf="selected">
-      <div *ngIf="selected && selected.showTools"><i nz-icon nzType="arrow-right" nzTheme="outline" (click)="showTransition($event)"></i></div>
-      <div *ngIf="selected && selected.showTools"><i nz-icon nzType="delete" nzTheme="fill" (click)="toolDeleteHandler($event)"></i></div>
+    <div class="svg-tools" (wheel)="wheelTools($event)" [ngStyle]="{'left': selected.horizontal() / svgProperties.scaleX + svgProperties.translateX + 'px', top: selected.longitudinal() / svgProperties.scaleY + svgProperties.translateY + 'px'}" *ngIf="selected && selected.showTools">
+      <div><i nz-icon nzType="arrow-right" nzTheme="outline" (click)="showTransition($event)"></i></div>
+      <div><i nz-icon nzType="delete" nzTheme="fill" (click)="toolDeleteHandler($event)"></i></div>
     </div>
 
   </div>

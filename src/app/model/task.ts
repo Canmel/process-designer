@@ -18,13 +18,21 @@ export class Task extends BaseEvent {
     console.log(this.x, this.y);
   }
 
+  centerX(): number {
+    return this.x + 0.5 * this.width;
+  }
+
+  centerY(): number {
+    return this.y + 0.5 * this.height;
+  }
+
 
   horizontal(): number {
-    return this.width + this.x + this.borderWidth;
+    return this.width + this.x + this.borderWidth + 2;
   }
 
   longitudinal(): number {
-    return this.height + this.y;
+    return this.y;
   }
 
   setX(x: number): Task {

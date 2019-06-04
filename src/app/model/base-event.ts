@@ -33,4 +33,12 @@ export class BaseEvent {
     this.y = y;
     return this;
   }
+
+  centerX(): number {
+    return this.x;
+  }
+
+  centerY(): number {
+    return this.y;
+  }
 }

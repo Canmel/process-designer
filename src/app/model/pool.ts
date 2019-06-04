@@ -20,11 +20,11 @@ export class Pool extends BaseEvent {
   }
 
   horizontal(): number {
-    return this.width + this.x;
+    return this.width + this.x + 5;
   }
 
   longitudinal(): number {
-    return this.height + this.y + this.borderWidth;
+    return this.y + this.borderWidth - 0.5 * this.height;
   }
 
   setX(x: number): Pool {
@@ -40,5 +40,13 @@ export class Pool extends BaseEvent {
   // 位置斧正
   correctPosition(p: number, length: number): number {
     return p - (length / 2);
+  }
+
+  centerX(): number {
+    return this.x + 0.5 * this.width;
+  }
+
+  centerY(): number {
+    return this.y + 0.5 * this.height;
   }
 }

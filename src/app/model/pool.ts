@@ -20,11 +20,11 @@ export class Pool extends BaseEvent {
   }
 
   horizontal(): number {
-    return this.width + this.x + 5;
+    return this.width + 5;
   }
 
   longitudinal(): number {
-    return this.y + this.borderWidth - 0.5 * this.height;
+    return this.borderWidth - 0.5 * this.height;
   }
 
   setX(x: number): Pool {

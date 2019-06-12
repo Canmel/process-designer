@@ -20,11 +20,11 @@ export class Start extends BaseEvent {
   }
 
   horizontal(): number {
-    return this.radius + this.x + this.borderWidth + this.strokeWidth;
+    return this.radius + this.borderWidth + this.strokeWidth;
   }
 
   longitudinal(): number {
-    return this.y - 2 * this.radius;
+    return 2 * this.radius;
   }
 
   setX(x: number): Start {

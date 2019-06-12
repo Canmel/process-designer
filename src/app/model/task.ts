@@ -28,11 +28,11 @@ export class Task extends BaseEvent {
 
 
   horizontal(): number {
-    return this.width + this.x + this.borderWidth + 2;
+    return this.width + this.borderWidth + 2;
   }
 
   longitudinal(): number {
-    return this.y;
+    return this.borderWidth + 2;
   }
 
   setX(x: number): Task {

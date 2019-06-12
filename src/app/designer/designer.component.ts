@@ -51,10 +51,10 @@ export class DesignerComponent implements OnInit {
 
   onItemDrop(e: any) {
     let positionX = e['nativeEvent']['offsetX'];
-    positionX = positionX * this.svgProperties.scaleX;
+    positionX = positionX / this.svgProperties.scaleX;
     positionX -= this.svgProperties.translateX;
     let positionY = e['nativeEvent']['offsetY'];
-    positionY = positionY * this.svgProperties.scaleY;
+    positionY = positionY / this.svgProperties.scaleY;
     positionY -= this.svgProperties.translateY;
 
     console.log('新建位置', positionX, positionY);
@@ -105,8 +105,9 @@ export class DesignerComponent implements OnInit {
     if (this.selected === null) {
       return;
     }
-    this.selected.setTrueX(this.taskMove.x - this.svgProperties.translateX).setTrueY(this.taskMove.y - this.svgProperties.translateY);
+    this.selected.setTrueX(this.taskMove.x / this.svgProperties.scaleX).setTrueY(this.taskMove.y / this.svgProperties.scaleY);
     this.taskMove = null;
+    console.log(this.selected.x, this.selected.y);
   }
 
   svgMouseMoveHandler(e) {
@@ -139,12 +140,10 @@ export class DesignerComponent implements OnInit {
       this.selected.showTools = true;
     }
 
-    // if (this.selected && this.selected.showTools) {
-    //   $('.svg-tools').css('left', this.selected.horizontal());
-    //   $('.svg-tools').css('top', this.selected.longitudinal());
-    // }
     // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
     this.taskMove = this.copyNewInstance(item);
+    this.toCurrentPosition(e, this.taskMove);
+    e.stopPropagation();
   }
 
   /**
@@ -243,7 +242,7 @@ export class DesignerComponent implements OnInit {
 
   toCurrentPosition(e, item) {
     console.log('前往目标点：', e.offsetX, e.offsetY);
-    item.setX(e['offsetX'] * this.svgProperties.scaleX).setY(e['offsetY'] * this.svgProperties.scaleY);
+    item.setX(e['offsetX']).setY(e['offsetY']);
   }
 
   toTrueCurrentPosition(e, item) {

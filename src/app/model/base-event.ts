@@ -7,6 +7,8 @@ export class BaseEvent {
   borderWidth: number;
   skin: string;
   showTools: boolean;
+  width: number;
+  height: number
 
   constructor() {
     this.mainColor = '#fff';
@@ -14,6 +16,8 @@ export class BaseEvent {
     this.selected = false;
     this.showTools = false;
     this.borderWidth = 3;
+    this.width = 0;
+    this.height = 0;
   }
 
   horizontal(): number {

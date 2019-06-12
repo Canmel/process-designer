@@ -17,11 +17,11 @@ export class Getway extends BaseEvent {
 
 
   horizontal(): number {
-    return this.x + 1.5 * this.width + this.borderWidth;
+    return 1.5 * this.width + this.borderWidth;
   }
 
   longitudinal(): number {
-    return this.y - this.height;
+    return this.height;
   }
 
   setTransForm(x: number, y: number): Getway {

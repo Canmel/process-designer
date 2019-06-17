@@ -106,7 +106,6 @@
           <!--任务相关 开始-->
           <g *ngFor="let item of tasks"
              (mousedown)="rectMouseDownHandler($event, item)">
-
             <g class="d-outline">
               <rect [attr.width]="item.width" [attr.height]="item.height"
                     [attr.x]="item.x" [attr.y]="item.y"

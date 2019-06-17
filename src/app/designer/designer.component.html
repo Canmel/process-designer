@@ -98,8 +98,8 @@
           <g>
             <line
               [attr.x1]="transitionLine.x" [attr.y1]="transitionLine.y" [attr.stroke-dasharray]="[2, 3]"
-              [attr.x2]="svgProperties.scaleX * (transitionLine.terminalX - svgProperties.translateX)"
-              [attr.y2]="svgProperties.scaleY * (transitionLine.terminalY - svgProperties.translateY)"
+              [attr.x2]="(svgProperties.cursorX ) / svgProperties.scaleX - svgProperties.translateX"
+              [attr.y2]="(svgProperties.cursorY ) / svgProperties.scaleY - svgProperties.translateY"
               [attr.stroke-width]="transitionLine.strokeWidth" [attr.stroke]="transitionLine.stroke"
               *ngIf="transitionLine"></line>
           </g>

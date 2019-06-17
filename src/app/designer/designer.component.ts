@@ -105,7 +105,8 @@ export class DesignerComponent implements OnInit {
     if (this.selected === null) {
       return;
     }
-    this.selected.setTrueX(this.taskMove.x / this.svgProperties.scaleX).setTrueY(this.taskMove.y / this.svgProperties.scaleY);
+    this.selected.setTrueX(this.taskMove.x / this.svgProperties.scaleX - this.svgProperties.translateX)
+      .setTrueY(this.taskMove.y / this.svgProperties.scaleY - this.svgProperties.translateY);
     this.taskMove = null;
     console.log(this.selected.x, this.selected.y);
   }

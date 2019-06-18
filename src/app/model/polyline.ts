@@ -55,6 +55,11 @@ export class Polyline {
         new SvgPoint(this.startRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
       this.points.splice(this.points.length - 1, 0,
         new SvgPoint(this.endRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
+    } else {
+      this.points.splice(this.points.length - 1, 0,
+        new SvgPoint(this.startRect.centerX(), this.startRect.centerY() - this.minClearanceX - 0.5 * this.startRect.longitudinal()));
+      this.points.splice(this.points.length - 1, 0,
+        new SvgPoint(this.endRect.centerX(), this.startRect.centerY() - this.minClearanceX - 0.5 * this.startRect.longitudinal()));
     }
   }
 

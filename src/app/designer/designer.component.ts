@@ -177,7 +177,7 @@ export class DesignerComponent implements OnInit {
   }
 
   /**
-   * 重新拷贝一个新的svg对象，避免angular 的双向绑定。使得确保可以生成一个移动任务模块
+   * 重新拷贝一个新的svg对象， 避免angular 的双向绑定。使得确保可以生成一个移动任务模块
    * @param item 模块对象
    */
   copyNewInstance(item) {

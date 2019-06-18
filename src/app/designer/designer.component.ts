@@ -367,6 +367,5 @@ export class DesignerComponent implements OnInit {
         _this.polyLines[index].setEndRect(_this.selected);
       }
     });
-    console.log(this.polyLines);
   }
 }

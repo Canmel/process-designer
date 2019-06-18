@@ -97,7 +97,7 @@
         <g [attr.transform]="'translate('+ svgProperties.translateX * svgProperties.scaleX + ', ' + svgProperties.translateY * svgProperties.scaleY + ')scale(' + svgProperties.scaleX + ',' + svgProperties.scaleY + ')'">
           <g *ngFor="let item of polyLines">
             <polyline [attr.points]="item.pointStrs"
-            style="fill:white;stroke:red;stroke-width:2"></polyline>
+            style="fill:none; stroke:red;stroke-width:2"></polyline>
           </g>
 
           <g>

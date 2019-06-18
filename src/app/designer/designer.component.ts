@@ -104,14 +104,14 @@ export class DesignerComponent implements OnInit {
     if (this.selected === null) {
       return;
     }
-    this.findPolyLineAndLineTo(this.selected);
+
     this.selected.setTrueX(this.taskMove.x / this.svgProperties.scaleX - this.svgProperties.translateX)
       .setTrueY(this.taskMove.y / this.svgProperties.scaleY - this.svgProperties.translateY);
+    this.findPolyLineAndLineTo(this.selected);
     this.taskMove = null;
   }
 
   svgMouseMoveHandler(e) {
-
     this.svgProperties.cursorX = e['offsetX'];
     this.svgProperties.cursorY = e['offsetY'];
     if (this.transitionLine) {
@@ -357,7 +357,16 @@ export class DesignerComponent implements OnInit {
   }
 
   // 寻找关于某个节点的折线并且修正
-  findPolyLineAndLineTo(item: BaseEvent){
-    console.log(item);
+  findPolyLineAndLineTo(item: BaseEvent) {
+    const _this = this;
+    this.polyLines.forEach(function (polyline: Polyline, index: number) {
+      if (polyline.startRect === _this.selected) {
+        _this.polyLines[index].setStartRect(_this.selected);
+      }
+      if (polyline.endRect === _this.selected) {
+        _this.polyLines[index].setEndRect(_this.selected);
+      }
+    });
+    console.log(this.polyLines);
   }
 }

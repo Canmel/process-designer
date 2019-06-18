@@ -7,6 +7,7 @@ export class Polyline {
   endRect: BaseEvent;
   minClearanceX: number;
   minClearanceY: number;
+  mainColor: string;
   pointStrs: Array<string>;
 
   constructor(startRect: BaseEvent, endRect: BaseEvent) {
@@ -14,6 +15,7 @@ export class Polyline {
     this.endRect = endRect;
     this.minClearanceX = 40;
     this.minClearanceY = 50;
+    this.mainColor = 'black';
     this.setPoints();
   }
 

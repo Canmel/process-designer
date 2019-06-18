@@ -32,7 +32,7 @@ export class DesignerComponent implements OnInit {
 
   currentTip: ToolTip = new ToolTip('', 0, 0);
 
-  selected = null;
+  selected: BaseEvent = null;
 
   transitionLine: TransitionLine = null;
 
@@ -60,7 +60,6 @@ export class DesignerComponent implements OnInit {
     positionY = positionY / this.svgProperties.scaleY;
     positionY -= this.svgProperties.translateY;
 
-    console.log('新建位置', positionX, positionY);
     switch (e.dragData) {
       case('start'):
         this.starts.push(new Start(positionX, positionY, ''));
@@ -95,26 +94,24 @@ export class DesignerComponent implements OnInit {
   svgMouseDownHandler(e) {
     this.svgProperties.drag = true;
     this.transitionLine = null;
-    console.log(this.svgProperties);
-    console.log('画布位置', e.offsetX, e.offsetY);
   }
 
   svgMouseUpHandler($event) {
     this.svgProperties.drag = false;
-    console.log(this.svgProperties.drag);
   }
 
   rectMouseUpHandler(e) {
     if (this.selected === null) {
       return;
     }
+    this.findPolyLineAndLineTo(this.selected);
     this.selected.setTrueX(this.taskMove.x / this.svgProperties.scaleX - this.svgProperties.translateX)
       .setTrueY(this.taskMove.y / this.svgProperties.scaleY - this.svgProperties.translateY);
     this.taskMove = null;
-    console.log(this.selected.x, this.selected.y);
   }
 
   svgMouseMoveHandler(e) {
+
     this.svgProperties.cursorX = e['offsetX'];
     this.svgProperties.cursorY = e['offsetY'];
     if (this.transitionLine) {
@@ -122,11 +119,13 @@ export class DesignerComponent implements OnInit {
       this.transitionLine.terminalY = e['offsetY'];
     }
     if (this.taskMove) {
+      // 拖动
       if (this.taskMove instanceof Getway) {
         this.taskMove.setTransForm(e['offsetY'], e['offsetX']);
       }
       this.toCurrentPosition(e, this.taskMove);
     } else {
+      // 平移
       if (this.svgProperties.drag) {
         this.svgProperties.translateX += e.movementX;
         this.svgProperties.translateY += e.movementY;
@@ -134,17 +133,24 @@ export class DesignerComponent implements OnInit {
     }
   }
 
-  rectMouseDownHandler(e: any, item) {
-    this.transitionLine = null;
-    this.selected = item;
-    if (this.selected === item) {
-      this.selected.showTools = !this.selected.showTools;
+  rectMouseDownHandler(e: any, item: BaseEvent) {
+    if (this.transitionLine) {
+      const polyLine = new Polyline(this.selected, item);
+      this.polyLines.push(polyLine);
+      this.transitionLine = null;
     } else {
-      this.selected.showTools = true;
+      this.transitionLine = null;
+      this.selected = item;
+      if (this.selected === item) {
+        this.selected.showTools = !this.selected.showTools;
+      } else {
+        this.selected.showTools = true;
+      }
+      // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
+      this.taskMove = this.copyNewInstance(item);
+      this.toCurrentPosition(e, this.taskMove);
     }
-    // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
-    this.taskMove = this.copyNewInstance(item);
-    this.toCurrentPosition(e, this.taskMove);
+
     e.stopPropagation();
   }
 
@@ -157,7 +163,7 @@ export class DesignerComponent implements OnInit {
 
   // rect hover 离开事件
   rectMouseOutHandler(e: any, item) {
-      this.rectToNormal(e.srcElement);
+    this.rectToNormal(e.srcElement);
   }
 
   rectToActive(element: any) {
@@ -265,7 +271,6 @@ export class DesignerComponent implements OnInit {
   }
 
   toCurrentPosition(e, item) {
-    console.log('前往目标点：', e.offsetX, e.offsetY);
     item.setX(e['offsetX']).setY(e['offsetY']);
   }
 
@@ -349,5 +354,10 @@ export class DesignerComponent implements OnInit {
     if (item instanceof Pool) {
       return this.pools;
     }
+  }
+
+  // 寻找关于某个节点的折线并且修正
+  findPolyLineAndLineTo(item: BaseEvent){
+    console.log(item);
   }
 }

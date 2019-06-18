@@ -7,17 +7,17 @@ export class Polyline {
   endRect: BaseEvent;
 
   constructor(startRect: BaseEvent, endRect: BaseEvent) {
+    this.points = [];
     this.startRect = startRect;
     this.endRect = endRect;
-
-    this.points.push(new SvgPoint(startRect.x, startRect.y));
-    this.points.push(new SvgPoint(endRect.x, endRect.y));
+    this.points.push(new SvgPoint(startRect.centerX(), startRect.centerY()));
+    this.points.push(new SvgPoint(endRect.centerX(), endRect.centerY()));
   }
 
   getPoints(): Array<any> {
     const result = new Array<any>();
     this.points.forEach(function (value: SvgPoint, index: number) {
-      console.log(value);
+      result.push(value.x + ', ' + value.y);
     });
     return result;
   }

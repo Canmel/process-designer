@@ -24,7 +24,7 @@ export class Start extends BaseEvent {
   }
 
   longitudinal(): number {
-    return 2 * this.radius;
+    return this.radius + this.borderWidth + this.strokeWidth;
   }
 
   setX(x: number): Start {

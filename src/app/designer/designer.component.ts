@@ -9,6 +9,7 @@ import {Getway} from '../model/getway';
 import {Pool} from '../model/pool';
 import * as $ from 'jquery';
 import {TransitionLine} from '../model/transition-line';
+import {Polyline} from '../model/polyline';
 
 @Component({
   selector: 'app-designer',
@@ -48,6 +49,8 @@ export class DesignerComponent implements OnInit {
     cursorX: 0,
     cursorY: 0
   };
+
+  polyLines: Array<Polyline> = [];
 
   onItemDrop(e: any) {
     let positionX = e['nativeEvent']['offsetX'];
@@ -132,19 +135,39 @@ export class DesignerComponent implements OnInit {
   }
 
   rectMouseDownHandler(e: any, item) {
-    console.log(e);
+    this.transitionLine = null;
+    this.selected = item;
     if (this.selected === item) {
-      this.selected = item;
       this.selected.showTools = !this.selected.showTools;
     } else {
-      this.selected = item;
       this.selected.showTools = true;
     }
-
     // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
     this.taskMove = this.copyNewInstance(item);
     this.toCurrentPosition(e, this.taskMove);
     e.stopPropagation();
+  }
+
+  // rect hover事件
+  rectMouseOverHandler(e: any, item) {
+    if (this.transitionLine) {
+      this.rectToActive(e.srcElement);
+    }
+  }
+
+  // rect hover 离开事件
+  rectMouseOutHandler(e: any, item) {
+      this.rectToNormal(e.srcElement);
+  }
+
+  rectToActive(element: any) {
+    $(element).parent().addClass('d-outline-selected-true');
+    $(element).addClass('d-outline-selected-true');
+  }
+
+  rectToNormal(element: any) {
+    $(element).parent().removeClass('d-outline-selected-true');
+    $(element).removeClass('d-outline-selected-true');
   }
 
   /**

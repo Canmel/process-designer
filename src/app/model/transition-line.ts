@@ -12,7 +12,7 @@ export class TransitionLine {
     this.terminalX = x2;
     this.terminalY = y2;
     this.strokeWidth = 2;
-    this.stroke = '#ecca17';
+    this.stroke = 'green';
   }
 
   setTerminalX (x: number) {

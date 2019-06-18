@@ -18,9 +18,29 @@ p {
 
 }
 
+.d-outline-selected-true {
+  stroke: green;
+}
+
+.d-outline-selected-false {
+  stroke: green;
+}
+
 .d-outline:hover + rect {
   stroke-dasharray: 3, 3;
   stroke: red;
+  stroke-width: 1;
+}
+
+.d-outline-selected-false:hover + rect {
+  stroke-dasharray: 3, 3;
+  stroke: #ff820b;
+  stroke-width: 1;
+}
+
+.d-outline-selected-true:hover + rect {
+  stroke-dasharray: 3, 3;
+  stroke: #06ff29;
   stroke-width: 1;
 }
 

@@ -17,6 +17,8 @@ export class Pool extends BaseEvent {
     } else {
       this.name = name;
     }
+    this.hborder = 0.5 * this.horizontal() + this.borderWidth;
+    this.lborder = 0.5 * this.longitudinal() + this.borderWidth;
   }
 
   horizontal(): number {
@@ -24,7 +26,7 @@ export class Pool extends BaseEvent {
   }
 
   longitudinal(): number {
-    return this.borderWidth - 0.5 * this.height;
+    return this.height + this.borderWidth;
   }
 
   setX(x: number): Pool {

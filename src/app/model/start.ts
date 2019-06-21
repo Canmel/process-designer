@@ -16,16 +16,16 @@ export class Start extends BaseEvent {
     } else {
       this.name = name;
     }
-    this.hborder = 0.5 * this.horizontal() + this.borderWidth;
-    this.lborder = 0.5 * this.longitudinal() + this.borderWidth;
+    this.hborder = 0.5 * this.horizontal();
+    this.lborder = 0.5 * this.longitudinal();
   }
 
   horizontal(): number {
-    return this.radius + this.borderWidth + this.strokeWidth;
+    return 2 * this.radius + this.borderWidth;
   }
 
   longitudinal(): number {
-    return this.radius + this.borderWidth + this.strokeWidth;
+    return 2 * this.radius + this.borderWidth;
   }
 
   setX(x: number): Start {

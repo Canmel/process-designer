@@ -16,15 +16,17 @@ export class End extends BaseEvent {
     } else {
       this.name = name;
     }
+    this.hborder = 0.5 * this.horizontal();
+    this.lborder = 0.5 * this.longitudinal();
   }
 
 
   horizontal(): number {
-    return this.radius + this.strokeWidth + this.borderWidth;
+    return 2 * this.radius + this.borderWidth;
   }
 
   longitudinal(): number {
-    return 2 * this.radius;
+    return 2 * this.radius + this.borderWidth;
   }
 
   setX(x: number): End {

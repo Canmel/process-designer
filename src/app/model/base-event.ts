@@ -11,6 +11,7 @@ export class BaseEvent {
   height: number;
   hborder: number;
   lborder: number;
+  // strokeWidth: any;
 
   constructor() {
     this.mainColor = '#fff';

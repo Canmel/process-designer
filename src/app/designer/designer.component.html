@@ -47,7 +47,8 @@
             <svg width="100%" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  (mousemove)="toolsMouseMoveHandler($event, '创建一个结束组件')" (mouseout)="toolsMouseOutHandler()"
                  style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-              <ellipse stroke="#000" ry="15.000072" rx="14.714345" cy="21" cx="21" stroke-width="5" fill="#fff"></ellipse>
+              <ellipse stroke="#000" ry="15.000072" rx="14.714345" cy="21" cx="21" stroke-width="5"
+                       fill="#fff"></ellipse>
             </svg>
           </div>
           <div draggable [dragData]="'task'">
@@ -75,7 +76,8 @@
     </nz-card>
   </div>
   <div style="position: absolute; top: 0px; right: 0px; height: 500px; width: 300px; z-index: 999">
-    <nz-card [nzBordered]="true" nzTitle="svgProperties" [nzExtra]="extraTemplate" class="tools-background" style="padding: 0px">
+    <nz-card [nzBordered]="true" nzTitle="svgProperties" [nzExtra]="extraTemplate" class="tools-background"
+             style="padding: 0px">
       <div nz-row style="height: 100%;">
         <ul>
           <li><span>scaleX(X缩放比例)：</span> <span>{{svgProperties.scaleX}}</span></li>
@@ -91,14 +93,17 @@
     </nz-card>
   </div>
   <div nz-col nzSpan="21" style="width: 87.5%" class="designer-background" droppable (onDrop)="onItemDrop($event)">
-    <svg id="designer-content" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" [ngStyle]="{cursor: svgProperties.cursor}"
+    <svg id="designer-content" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg"
+         [ngStyle]="{cursor: svgProperties.cursor}"
          (mousedown)="svgMouseDownHandler($event)" (mouseup)="svgMouseUpHandler($event)"
          (mousemove)="svgMouseMoveHandler($event)" (wheel)="svgWheelHandler($event)">
       <g>
-        <g [attr.transform]="'translate('+ svgProperties.translateX * svgProperties.scaleX + ', ' + svgProperties.translateY * svgProperties.scaleY + ')scale(' + svgProperties.scaleX + ',' + svgProperties.scaleY + ')'">
+        <g
+          [attr.transform]="'translate('+ svgProperties.translateX * svgProperties.scaleX + ', ' + svgProperties.translateY * svgProperties.scaleY + ')scale(' + svgProperties.scaleX + ',' + svgProperties.scaleY + ')'">
           <g *ngFor="let item of polyLines">
             <polyline [attr.points]="item.pointStrs"
-            [attr.stroke-width]="2" [attr.stroke]="item.mainColor" [attr.fill]="'none'"></polyline>
+                      [attr.stroke-width]="2" [attr.stroke]="item.mainColor" [attr.fill]="'none'"
+                      marker-end='url(#markerArrow)'></polyline>
           </g>
 
           <g>
@@ -316,19 +321,29 @@
 
         <!--&lt;!&ndash;工具组件 开始&ndash;&gt;-->
         <!--<g *ngIf="selected && selected.showTools">-->
-          <!--<rect [attr.x]="selected.horizontal()" [attr.y]="selected.longitudinal()" width="30" height="30"></rect>-->
+        <!--<rect [attr.x]="selected.horizontal()" [attr.y]="selected.longitudinal()" width="30" height="30"></rect>-->
         <!--</g>-->
         <!--&lt;!&ndash;工具组件 结束&ndash;&gt;-->
       </g>
 
+      <defs>
+        <marker id='markerArrow' markerWidth='13' markerHeight='13' refx='2' refy='6' orient='auto'>
+          <path d='M2,2 L2,11 L10,6 L2,2' style='fill:#00ff00'></path>
+        </marker>
+      </defs>
+
     </svg>
 
-    <div class="svg-tools" (wheel)="wheelTools($event)" [ngStyle]="{'left': (selected.horizontal() + selected.x + svgProperties.translateX) * svgProperties.scaleX + 'px', top: (selected.y  -selected.longitudinal() + svgProperties.translateY) * svgProperties.scaleY + 'px'}" *ngIf="selected && selected.showTools">
+    <div class="svg-tools" (wheel)="wheelTools($event)"
+         [ngStyle]="{'left': ((selected.horizontal() * 0.5) + selected.centerX() + svgProperties.translateX + 5) * svgProperties.scaleX + 'px',
+          top: (selected.centerY() - (selected.longitudinal()  * 0.5)+ svgProperties.translateY - 5) * svgProperties.scaleY + 'px'}"
+         *ngIf="selected && selected.showTools">
       <div><i nz-icon nzType="arrow-right" nzTheme="outline" (click)="showTransition($event)"></i></div>
       <div><i nz-icon nzType="delete" nzTheme="fill" (click)="toolDeleteHandler($event)"></i></div>
     </div>
 
   </div>
 </div>
-<div class="tool-move-tips" [style.top]="currentTip.y + 'px'" [style.left]="currentTip.x + 'px'"><span>{{currentTip.message}}</span>
+<div class="tool-move-tips" [style.top]="currentTip.y + 'px'" [style.left]="currentTip.x + 'px'">
+  <span>{{currentTip.message}}</span>
 </div>

@@ -68,8 +68,7 @@ export class Polyline {
         new SvgPoint(this.endRect.centerX(), this.startRect.centerY() - this.minClearanceX - 0.5 * this.startRect.longitudinal()));
     }
   }
-
-
+  
   setStartRect(value: BaseEvent) {
     this.startRect = value;
     this.setPointeAndStr();

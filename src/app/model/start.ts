@@ -16,7 +16,8 @@ export class Start extends BaseEvent {
     } else {
       this.name = name;
     }
-    console.log(this.x, this.y);
+    this.hborder = 0.5 * this.horizontal() + this.borderWidth;
+    this.lborder = 0.5 * this.longitudinal() + this.borderWidth;
   }
 
   horizontal(): number {

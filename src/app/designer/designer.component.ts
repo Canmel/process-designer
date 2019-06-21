@@ -36,6 +36,8 @@ export class DesignerComponent implements OnInit {
 
   transitionLine: TransitionLine = null;
 
+  isShowMoveTask: Boolean = false;
+
   svgProperties = {
     scaleX: 1.0,
     scaleY: 1.0,
@@ -94,6 +96,9 @@ export class DesignerComponent implements OnInit {
   svgMouseDownHandler(e) {
     this.svgProperties.drag = true;
     this.transitionLine = null;
+    if (this.selected) {
+      this.selected.showTools = false;
+    }
   }
 
   svgMouseUpHandler($event) {
@@ -109,6 +114,7 @@ export class DesignerComponent implements OnInit {
       .setTrueY(this.taskMove.y / this.svgProperties.scaleY - this.svgProperties.translateY);
     this.findPolyLineAndLineTo(this.selected);
     this.taskMove = null;
+    this.isShowMoveTask = false;
   }
 
   svgMouseMoveHandler(e) {
@@ -131,6 +137,7 @@ export class DesignerComponent implements OnInit {
         this.svgProperties.translateY += e.movementY;
       }
     }
+    this.isShowMoveTask = true;
   }
 
   rectMouseDownHandler(e: any, item: BaseEvent) {
@@ -149,8 +156,16 @@ export class DesignerComponent implements OnInit {
       // 使用copy方法，复制一个新的对象，如果只是单纯的赋值，实际上引用的事同一个对象，在angular的双向绑定中，并不能生成临时可移动的组件
       this.taskMove = this.copyNewInstance(item);
       this.toCurrentPosition(e, this.taskMove);
+      this.isShowMoveTask = false;
     }
 
+    e.stopPropagation();
+  }
+
+  rectClickHandler(e: any, item) {
+    // this.isSelected = item;
+    this.taskMove = null;
+    this.isShowMoveTask = false;
     e.stopPropagation();
   }
 

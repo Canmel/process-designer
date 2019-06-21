@@ -31,7 +31,6 @@ export class Polyline {
     // 拆点只为显示;
     this.points.forEach(function (value: SvgPoint, index: number) {
       _this.pointStrs.push(value.x + ', ' + value.y);
-      console.log(_this);
     });
   }
 
@@ -40,24 +39,29 @@ export class Polyline {
     // 两点相差距离
     const distanceX = this.endRect.centerX() - this.startRect.centerX();
     const distanceY = this.endRect.centerY() - this.startRect.centerY();
-    console.log(this.endRect.centerX() - this.startRect.centerX());
-
     // 两个元素 间隙
     const clearanceX = distanceX - (this.endRect.horizontal() + this.startRect.horizontal()) * 0.5;
     const clearanceY = distanceY - (this.endRect.longitudinal() + this.startRect.longitudinal() + 10) * 0.5;
-    console.log(clearanceX, clearanceY);
     // 实际看了一下 当 clearanceX > 40 的时候可以先画好水平线，再画垂直，最后画水平线
     if (clearanceX > this.minClearanceX) {
+      this.points[0].x += this.startRect.hborder;
+      this.points[1].x -= this.endRect.hborder;
       this.points.splice(this.points.length - 1, 0,
         new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.startRect.centerY()));
       this.points.splice(this.points.length - 1, 0,
         new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.endRect.centerY()));
+      const ps = this.points[0];
     } else if (clearanceY > this.minClearanceY) {
+      this.points[0].y += this.startRect.lborder;
+      this.points[1].y -= this.endRect.lborder;
       this.points.splice(this.points.length - 1, 0,
         new SvgPoint(this.startRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
       this.points.splice(this.points.length - 1, 0,
         new SvgPoint(this.endRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
+      const ps = this.points[0];
     } else {
+      this.points[0].y -= this.startRect.lborder;
+      this.points[1].y -= this.endRect.lborder;
       this.points.splice(this.points.length - 1, 0,
         new SvgPoint(this.startRect.centerX(), this.startRect.centerY() - this.minClearanceX - 0.5 * this.startRect.longitudinal()));
       this.points.splice(this.points.length - 1, 0,

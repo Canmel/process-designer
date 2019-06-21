@@ -15,7 +15,8 @@ export class Task extends BaseEvent {
     } else {
       this.name = name;
     }
-    console.log(this.x, this.y);
+    this.hborder = 0.5 * this.horizontal() + this.borderWidth;
+    this.lborder = 0.5 * this.longitudinal() + this.borderWidth;
   }
 
   centerX(): number {
@@ -32,7 +33,7 @@ export class Task extends BaseEvent {
   }
 
   longitudinal(): number {
-    return this.borderWidth + 2;
+    return this.height + this.borderWidth + 2;
   }
 
   setX(x: number): Task {

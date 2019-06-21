@@ -85,6 +85,7 @@
           <li><span>drag(拖拽状态)：</span> <span>{{svgProperties.drag}}</span></li>
           <li><span>cursorX(鼠标位置X)：</span> <span>{{svgProperties.cursorX}}</span></li>
           <li><span>cursorY(鼠标位置Y)：</span> <span>{{svgProperties.cursorY}}</span></li>
+          <li><span>是否显示移动组件：</span> <span>{{isShowMoveTask}}</span></li>
         </ul>
       </div>
     </nz-card>
@@ -110,6 +111,7 @@
           </g>
           <!--任务相关 开始-->
           <g *ngFor="let item of tasks"
+             (click)="rectClickHandler($event, item)"
              (mousedown)="rectMouseDownHandler($event, item)"
              (mouseout)="rectMouseOutHandler($event, item)"
              (mouseover)="rectMouseOverHandler($event, item)">
@@ -133,6 +135,7 @@
 
           <!--开始相关 开始-->
           <g *ngFor="let item of starts"
+             (click)="rectClickHandler($event, item)"
              (mousedown)="rectMouseDownHandler($event, item)"
              (mouseout)="rectMouseOutHandler($event, item)"
              (mouseover)="rectMouseOverHandler($event, item)">
@@ -152,6 +155,7 @@
 
           <!--结束相关 开始-->
           <g *ngFor="let item of ends"
+             (click)="rectClickHandler($event, item)"
              (mousedown)="rectMouseDownHandler($event, item)"
              (mouseout)="rectMouseOutHandler($event, item)"
              (mouseover)="rectMouseOverHandler($event, item)">
@@ -171,6 +175,7 @@
 
           <!--中继器 开始-->
           <g *ngFor="let item of intermediates"
+             (click)="rectClickHandler($event, item)"
              (mousedown)="rectMouseDownHandler($event, item)"
              (mouseout)="rectMouseOutHandler($event, item)"
              (mouseover)="rectMouseOverHandler($event, item)">
@@ -196,6 +201,7 @@
 
           <!--路由 开始-->
           <g *ngFor="let item of getways"
+             (click)="rectClickHandler($event, item)"
              (mousedown)="rectMouseDownHandler($event, item)"
              (mouseout)="rectMouseOutHandler($event, item)"
              (mouseover)="rectMouseOverHandler($event, item)">
@@ -228,6 +234,7 @@
           <!--路由 结束-->
 
           <g *ngFor="let item of pools"
+             (click)="rectClickHandler($event, item)"
              (mousedown)="rectMouseDownHandler($event, item)"
              (mouseout)="rectMouseOutHandler($event, item)"
              (mouseover)="rectMouseOverHandler($event, item)">
@@ -248,7 +255,7 @@
         </g>
 
         <!--移动组件 开始-->
-        <g *ngIf="taskMove"
+        <g *ngIf="taskMove && isShowMoveTask"
            (mouseup)="rectMouseUpHandler($event)">
           <g>
             <rect *ngIf="isShowRect(taskMove)"

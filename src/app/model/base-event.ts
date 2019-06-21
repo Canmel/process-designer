@@ -8,7 +8,9 @@ export class BaseEvent {
   skin: string;
   showTools: boolean;
   width: number;
-  height: number
+  height: number;
+  hborder: number;
+  lborder: number;
 
   constructor() {
     this.mainColor = '#fff';
@@ -18,6 +20,8 @@ export class BaseEvent {
     this.borderWidth = 3;
     this.width = 0;
     this.height = 0;
+    this.hborder = 0.5 * this.horizontal() + this.borderWidth;
+    this.lborder = 0.5 * this.longitudinal() + this.borderWidth;
   }
 
   horizontal(): number {

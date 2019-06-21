@@ -243,6 +243,16 @@ export class DesignerComponent implements OnInit {
     const items = this.getItemsArray(this.selected);
     const index = items.indexOf(this.selected);
     items.splice(index, 1);
+    const _this = this;
+
+    // 删除连接到这个的节点的连线
+    const result: Array<Polyline> = [];
+    this.polyLines.forEach(function (polyLine, index, array) {
+      if (!(polyLine.startRect === _this.selected || polyLine.endRect === _this.selected)) {
+        result.push(polyLine);
+      }
+    });
+    this.polyLines = result;
     this.selected = null;
   }
 

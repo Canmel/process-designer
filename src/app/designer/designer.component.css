@@ -23,24 +23,24 @@ p {
 }
 
 .d-outline-selected-false {
-  stroke: green;
+  stroke: red;
 }
 
 .d-outline:hover + rect {
   stroke-dasharray: 3, 3;
-  stroke: red;
+  stroke: #ffb500;
   stroke-width: 1;
 }
 
 .d-outline-selected-false:hover + rect {
   stroke-dasharray: 3, 3;
-  stroke: #ff820b;
+  stroke: red;
   stroke-width: 1;
 }
 
 .d-outline-selected-true:hover + rect {
   stroke-dasharray: 3, 3;
-  stroke: #06ff29;
+  stroke: green;
   stroke-width: 1;
 }
 

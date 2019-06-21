@@ -141,9 +141,20 @@ export class DesignerComponent implements OnInit {
   }
 
   rectMouseDownHandler(e: any, item: BaseEvent) {
+    const _this = this;
     if (this.transitionLine) {
-      const polyLine = new Polyline(this.selected, item);
-      this.polyLines.push(polyLine);
+      if (item !== this.selected) {
+        const polyLine = new Polyline(this.selected, item);
+        let pushFlag = true;
+        this.polyLines.forEach(function (p) {
+          if (p.startRect === _this.selected || item && p.endRect === item || _this.selected) {
+            pushFlag = false;
+          }
+        });
+        if (pushFlag) {
+          this.polyLines.push(polyLine);
+        }
+      }
       this.transitionLine = null;
     } else {
       this.transitionLine = null;
@@ -172,13 +183,29 @@ export class DesignerComponent implements OnInit {
   // rect hover事件
   rectMouseOverHandler(e: any, item) {
     if (this.transitionLine) {
-      this.rectToActive(e.srcElement);
+      this.isPolyLineError(item) ? this.rectToError(e.srcElement) : this.rectToActive(e.srcElement);
     }
+  }
+
+  isPolyLineError(item): boolean {
+    const _this = this;
+    let pushFlag = false;
+    this.polyLines.forEach(function (p) {
+      if (p.startRect === _this.selected || item && p.endRect === item || _this.selected) {
+        pushFlag = true;
+      }
+    });
+    return item === this.selected || pushFlag;
   }
 
   // rect hover 离开事件
   rectMouseOutHandler(e: any, item) {
     this.rectToNormal(e.srcElement);
+  }
+
+  rectToError(element: any) {
+    $(element).parent().addClass('d-outline-selected-false');
+    $(element).addClass('d-outline-selected-false');
   }
 
   rectToActive(element: any) {
@@ -189,6 +216,8 @@ export class DesignerComponent implements OnInit {
   rectToNormal(element: any) {
     $(element).parent().removeClass('d-outline-selected-true');
     $(element).removeClass('d-outline-selected-true');
+    $(element).parent().removeClass('d-outline-selected-false');
+    $(element).removeClass('d-outline-selected-false');
   }
 
   /**

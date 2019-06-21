@@ -38,6 +38,8 @@ export class DesignerComponent implements OnInit {
 
   isShowMoveTask: Boolean = false;
 
+  allRect: Array<BaseEvent> = [];
+
   svgProperties = {
     scaleX: 1.0,
     scaleY: 1.0,
@@ -88,6 +90,10 @@ export class DesignerComponent implements OnInit {
   constructor() {
   }
 
+  getAllRect(): Array<BaseEvent> {
+    return this.allRect.concat(this.tasks).concat(this.starts).concat(this.ends).concat(this.intermediates).concat(this.getways).concat(this.pools);
+  }
+
   ngOnInit() {
     this.svgProperties.width = $('#designer-content').width();
     this.svgProperties.height = $('#designer-content').height();
@@ -109,15 +115,25 @@ export class DesignerComponent implements OnInit {
     if (this.selected === null) {
       return;
     }
-
-    this.selected.setTrueX(this.taskMove.x / this.svgProperties.scaleX - this.svgProperties.translateX)
-      .setTrueY(this.taskMove.y / this.svgProperties.scaleY - this.svgProperties.translateY);
-    this.findPolyLineAndLineTo(this.selected);
+    let moveSuccessFlag = true;
+    const _this = this;
+    this.getAllRect().forEach(function (value, index, array) {
+      if (value !== _this.selected
+        && Math.abs(value.centerX() - _this.taskMove.centerX()) <= (value.hborder + _this.selected.hborder)
+        && Math.abs(value.centerY() - _this.taskMove.centerY()) <= (value.lborder + _this.selected.lborder)) {
+        moveSuccessFlag = false;
+      }
+    });
+    if (moveSuccessFlag) {
+      this.selected.setTrueX(this.taskMove.x / this.svgProperties.scaleX - this.svgProperties.translateX)
+        .setTrueY(this.taskMove.y / this.svgProperties.scaleY - this.svgProperties.translateY);
+      this.findPolyLineAndLineTo(this.selected);
+    }
     this.taskMove = null;
     this.isShowMoveTask = false;
   }
 
-  svgMouseMoveHandler(e) {
+  svgMouseMoveHandler(e: any) {
     this.svgProperties.cursorX = e['offsetX'];
     this.svgProperties.cursorY = e['offsetY'];
     if (this.transitionLine) {
@@ -129,6 +145,22 @@ export class DesignerComponent implements OnInit {
       if (this.taskMove instanceof Getway) {
         this.taskMove.setTransForm(e['offsetY'], e['offsetX']);
       }
+      let moveSuccessFlag = true;
+      const _this = this;
+      this.getAllRect().forEach(function (value, index, array) {
+        if (value !== _this.selected
+          && Math.abs(value.centerX() - _this.taskMove.centerX()) <= (value.hborder + _this.selected.hborder)
+          && Math.abs(value.centerY() - _this.taskMove.centerY()) <= (value.lborder + _this.selected.lborder)) {
+          moveSuccessFlag = false;
+        }
+      });
+
+      if (!moveSuccessFlag) {
+        this.rectToError(e.srcElement);
+      }else{
+        this.rectToNormal(e.srcElement);
+      }
+
       this.toCurrentPosition(e, this.taskMove);
     } else {
       // 平移
@@ -147,7 +179,7 @@ export class DesignerComponent implements OnInit {
         const polyLine = new Polyline(this.selected, item);
         let pushFlag = true;
         this.polyLines.forEach(function (p) {
-          if (p.startRect === _this.selected || item && p.endRect === item || _this.selected) {
+          if ((p.startRect === _this.selected || p.startRect === item) && (p.endRect === item || p.endRect === _this.selected)) {
             pushFlag = false;
           }
         });
@@ -191,7 +223,7 @@ export class DesignerComponent implements OnInit {
     const _this = this;
     let pushFlag = false;
     this.polyLines.forEach(function (p) {
-      if (p.startRect === _this.selected || item && p.endRect === item || _this.selected) {
+      if ((p.startRect === _this.selected || p.startRect === item) && (p.endRect === item || p.endRect === _this.selected)) {
         pushFlag = true;
       }
     });

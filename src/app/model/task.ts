@@ -15,8 +15,8 @@ export class Task extends BaseEvent {
     } else {
       this.name = name;
     }
-    this.hborder = 0.5 * this.horizontal() + this.borderWidth;
-    this.lborder = 0.5 * this.longitudinal() + this.borderWidth;
+    this.hborder = 0.5 * this.horizontal() + this.borderWidth + 10;
+    this.lborder = 0.5 * this.longitudinal() + this.borderWidth + 10;
   }
 
   centerX(): number {

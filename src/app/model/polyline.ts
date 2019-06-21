@@ -13,8 +13,8 @@ export class Polyline {
   constructor(startRect: BaseEvent, endRect: BaseEvent) {
     this.startRect = startRect;
     this.endRect = endRect;
-    this.minClearanceX = 40;
-    this.minClearanceY = 50;
+    this.minClearanceX = 100;
+    this.minClearanceY = 70;
     this.mainColor = 'black';
     this.setPoints();
   }
@@ -41,34 +41,87 @@ export class Polyline {
     const distanceY = this.endRect.centerY() - this.startRect.centerY();
     // 两个元素 间隙
     const clearanceX = distanceX - (this.endRect.horizontal() + this.startRect.horizontal()) * 0.5;
-    const clearanceY = distanceY - (this.endRect.longitudinal() + this.startRect.longitudinal() + 10) * 0.5;
+    const clearanceY = distanceY - (this.endRect.longitudinal() + this.startRect.longitudinal()) * 0.5;
     // 实际看了一下 当 clearanceX > 40 的时候可以先画好水平线，再画垂直，最后画水平线
-    if (clearanceX > this.minClearanceX) {
-      this.points[0].x += this.startRect.hborder;
-      this.points[1].x -= this.endRect.hborder;
-      this.points.splice(this.points.length - 1, 0,
-        new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.startRect.centerY()));
-      this.points.splice(this.points.length - 1, 0,
-        new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.endRect.centerY()));
-      const ps = this.points[0];
-    } else if (clearanceY > this.minClearanceY) {
-      this.points[0].y += this.startRect.lborder;
-      this.points[1].y -= this.endRect.lborder;
-      this.points.splice(this.points.length - 1, 0,
-        new SvgPoint(this.startRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
-      this.points.splice(this.points.length - 1, 0,
-        new SvgPoint(this.endRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
-      const ps = this.points[0];
+    if (distanceX > 0 && distanceY > 0) {
+      if (Math.abs(distanceX) > this.minClearanceX) {
+        this.left2rightLine(clearanceX);
+      } else if (Math.abs(distanceY) > this.minClearanceY) {
+        this.top2downLine(clearanceY);
+      } else {
+        this.otherLine();
+      }
+    } else if (distanceX > 0 && distanceY < 0) {
+      if (Math.abs(distanceX) > this.minClearanceX) {
+        this.left2rightLine(clearanceX);
+      } else if (Math.abs(distanceY) > this.minClearanceY) {
+        this.down2topLine(clearanceY);
+      } else {
+        this.otherLine();
+      }
+    } else if (distanceX < 0 && distanceY > 0) {
+      if (Math.abs(distanceX) > this.minClearanceX) {
+        this.right2leftLine(clearanceX);
+      } else if (Math.abs(distanceY) > this.minClearanceY) {
+        this.top2downLine(clearanceY);
+      } else {
+        this.otherLine();
+      }
+    } else if (distanceX < 0 && distanceY < 0) {
+      if (Math.abs(distanceX) > this.minClearanceX) {
+        this.right2leftLine(clearanceX);
+      } else if (Math.abs(distanceY) > this.minClearanceY) {
+        this.down2topLine(clearanceY);
+      } else {
+        this.otherLine();
+      }
     } else {
-      this.points[0].y -= this.startRect.lborder;
-      this.points[1].y -= this.endRect.lborder;
-      this.points.splice(this.points.length - 1, 0,
-        new SvgPoint(this.startRect.centerX(), this.startRect.centerY() - this.minClearanceX - 0.5 * this.startRect.longitudinal()));
-      this.points.splice(this.points.length - 1, 0,
-        new SvgPoint(this.endRect.centerX(), this.startRect.centerY() - this.minClearanceX - 0.5 * this.startRect.longitudinal()));
+      this.otherLine();
     }
   }
-  
+
+  otherLine() {
+    this.points[1].y -= this.endRect.lborder;
+    let rectY = 0;
+    rectY = this.startRect.centerY() > this.endRect.centerY() ? this.endRect.centerY() : this.startRect.centerY();
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.startRect.centerX(), rectY - this.minClearanceX - 0.5 * this.startRect.longitudinal()));
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.endRect.centerX(), rectY - this.minClearanceX - 0.5 * this.startRect.longitudinal()));
+  }
+
+  left2rightLine(clearanceX) {
+    this.points[1].x -= this.endRect.hborder;
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.startRect.centerY()));
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.endRect.centerY()));
+  }
+
+  right2leftLine(clearanceX) {
+    this.points[1].x += this.endRect.hborder;
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.startRect.centerY()));
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.endRect.centerY()));
+  }
+
+  down2topLine(clearanceY) {
+    this.points[1].y += this.endRect.lborder;
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.startRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.endRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
+  }
+
+  top2downLine(clearanceY) {
+    this.points[1].y -= this.endRect.lborder;
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.startRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
+    this.points.splice(this.points.length - 1, 0,
+      new SvgPoint(this.endRect.centerX(), this.startRect.centerY() + 0.5 * (clearanceY + this.startRect.longitudinal())));
+  }
+
   setStartRect(value: BaseEvent) {
     this.startRect = value;
     this.setPointeAndStr();

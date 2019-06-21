@@ -11,6 +11,7 @@ export class BaseEvent {
   height: number;
   hborder: number;
   lborder: number;
+  twidth: number;
   // strokeWidth: any;
 
   constructor() {
@@ -21,8 +22,8 @@ export class BaseEvent {
     this.borderWidth = 3;
     this.width = 0;
     this.height = 0;
-    this.hborder = 0.5 * this.horizontal() + this.borderWidth;
-    this.lborder = 0.5 * this.longitudinal() + this.borderWidth;
+    this.hborder = 0.5 * this.horizontal() + this.borderWidth + 10;
+    this.lborder = 0.5 * this.longitudinal() + this.borderWidth + 10;
   }
 
   horizontal(): number {

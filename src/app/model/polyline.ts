@@ -13,7 +13,7 @@ export class Polyline {
   constructor(startRect: BaseEvent, endRect: BaseEvent) {
     this.startRect = startRect;
     this.endRect = endRect;
-    this.minClearanceX = 100;
+    this.minClearanceX = 120;
     this.minClearanceY = 70;
     this.mainColor = 'black';
     this.setPoints();
@@ -40,8 +40,8 @@ export class Polyline {
     const distanceX = this.endRect.centerX() - this.startRect.centerX();
     const distanceY = this.endRect.centerY() - this.startRect.centerY();
     // 两个元素 间隙
-    const clearanceX = distanceX - (this.endRect.horizontal() + this.startRect.horizontal()) * 0.5;
-    const clearanceY = distanceY - (this.endRect.longitudinal() + this.startRect.longitudinal()) * 0.5;
+    const clearanceX = Math.abs(distanceX) - this.endRect.hborder - this.startRect.hborder;
+    const clearanceY = Math.abs(distanceY) - this.endRect.lborder - this.startRect.lborder;
     // 实际看了一下 当 clearanceX > 40 的时候可以先画好水平线，再画垂直，最后画水平线
     if (distanceX > 0 && distanceY > 0) {
       if (Math.abs(distanceX) > this.minClearanceX) {
@@ -93,17 +93,18 @@ export class Polyline {
   left2rightLine(clearanceX) {
     this.points[1].x -= this.endRect.hborder;
     this.points.splice(this.points.length - 1, 0,
-      new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.startRect.centerY()));
+      new SvgPoint(this.startRect.centerX() + this.startRect.hborder + 0.5 * clearanceX, this.startRect.centerY()));
     this.points.splice(this.points.length - 1, 0,
-      new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.endRect.centerY()));
+      new SvgPoint(this.startRect.centerX() + this.startRect.hborder + 0.5 * clearanceX, this.endRect.centerY()));
   }
 
   right2leftLine(clearanceX) {
     this.points[1].x += this.endRect.hborder;
     this.points.splice(this.points.length - 1, 0,
-      new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.startRect.centerY()));
+      new SvgPoint(this.startRect.centerX() - this.startRect.hborder - 0.5 * clearanceX, this.startRect.centerY()));
     this.points.splice(this.points.length - 1, 0,
-      new SvgPoint(this.startRect.centerX() + 0.5 * (clearanceX + this.startRect.horizontal()), this.endRect.centerY()));
+      new SvgPoint(this.startRect.centerX() - this.startRect.hborder - 0.5 * clearanceX, this.endRect.centerY()));
+    console.log(this.points);
   }
 
   down2topLine(clearanceY) {

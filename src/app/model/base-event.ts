@@ -13,6 +13,7 @@ export class BaseEvent {
   lborder: number;
   twidth: number;
   type: string;
+  role: any;
   // strokeWidth: any;
 
   constructor() {

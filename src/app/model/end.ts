@@ -19,6 +19,7 @@ export class End extends BaseEvent {
     this.type = '结束';
     this.hborder = 0.5 * this.horizontal() + 10;
     this.lborder = 0.5 * this.longitudinal() + 10;
+    this.role = '1';
   }
 
 

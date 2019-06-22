@@ -20,6 +20,7 @@ export class Pool extends BaseEvent {
     this.type = '泳道';
     this.hborder = 0.5 * this.horizontal() + this.borderWidth + 10;
     this.lborder = 0.5 * this.longitudinal() + this.borderWidth + 10;
+    this.role = '1';
   }
 
   horizontal(): number {

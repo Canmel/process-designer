@@ -96,7 +96,20 @@
         <br />
 
         <nz-input-group>
-          <input type="text" nz-input placeholder="相关责任人" />
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name">参与角色</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzXs]="24">
+            <nz-select
+              style="width: 200px;"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="选择参与角色"
+              [(ngModel)]="selected && selected.role">
+              <nz-option nzLabel="所有角色" nzValue="0"></nz-option>
+              <nz-option nzLabel="系统管理员" nzValue="1"></nz-option>
+              <nz-option nzLabel="部门主管" nzValue="2"></nz-option>
+              <nz-option nzLabel="工程师" nzValue="3"></nz-option>
+            </nz-select>
+          </nz-form-control>
         </nz-input-group>
 
         <br />

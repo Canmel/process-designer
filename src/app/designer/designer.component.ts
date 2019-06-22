@@ -109,7 +109,7 @@ export class DesignerComponent implements OnInit {
     this.svgProperties.drag = true;
     this.transitionLine = null;
     if (this.selected) {
-      this.selected.showTools = false;
+      this.selected = null;
     }
   }
 

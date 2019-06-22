@@ -79,16 +79,27 @@
     <nz-card [nzBordered]="true" nzTitle="属性详情" [nzExtra]="extraTemplate" class="tools-background"
              style="padding: 0px">
       <div nz-row style="height: 100%;">
-        <ul>
-          <li><span>scaleX(X缩放比例)：</span> <span>{{svgProperties.scaleX}}</span></li>
-          <li><span>scaleY(Y缩放比例)：</span> <span>{{svgProperties.scaleY}}</span></li>
-          <li><span>translateX(平移量X)：</span> <span>{{svgProperties.translateX}}</span></li>
-          <li><span>translateY(平移量Y)：</span> <span>{{svgProperties.translateY}}</span></li>
-          <li><span>drag(拖拽状态)：</span> <span>{{svgProperties.drag}}</span></li>
-          <li><span>cursorX(鼠标位置X)：</span> <span>{{svgProperties.cursorX}}</span></li>
-          <li><span>cursorY(鼠标位置Y)：</span> <span>{{svgProperties.cursorY}}</span></li>
-          <li><span>是否显示移动组件：</span> <span>{{isShowMoveTask}}</span></li>
-        </ul>
+        <nz-input-group>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="type">节点类型</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzXs]="24">
+            <input type="text" nz-input placeholder="节点类型" [value]="selected && selected.type" [disabled]="true" [readonly]="true" />
+          </nz-form-control>
+        </nz-input-group>
+        <br/>
+        <nz-input-group>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name">节点名称</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzXs]="24">
+            <input type="text" nz-input placeholder="节点名称" [(ngModel)]="selected && selected.name" />
+          </nz-form-control>
+        </nz-input-group>
+
+        <br />
+
+        <nz-input-group>
+          <input type="text" nz-input placeholder="相关责任人" />
+        </nz-input-group>
+
+        <br />
       </div>
     </nz-card>
   </div>

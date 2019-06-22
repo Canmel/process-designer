@@ -10,6 +10,7 @@ import {Pool} from '../model/pool';
 import * as $ from 'jquery';
 import {TransitionLine} from '../model/transition-line';
 import {Polyline} from '../model/polyline';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-designer',
@@ -17,7 +18,10 @@ import {Polyline} from '../model/polyline';
   styleUrls: ['./designer.component.css']
 })
 export class DesignerComponent implements OnInit {
+  validateForm: FormGroup;
+
   tasks: Array<Task> = [];
+
   taskMove: BaseEvent = null;
 
   starts: Array<Start> = [];

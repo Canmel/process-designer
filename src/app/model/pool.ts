@@ -13,10 +13,11 @@ export class Pool extends BaseEvent {
     this.x = this.correctPosition(x, this.width);
     this.y = this.correctPosition(y, this.height);
     if (name === undefined || name === '') {
-      this.name = '未命名任务';
+      this.name = '泳道';
     } else {
       this.name = name;
     }
+    this.type = '泳道';
     this.hborder = 0.5 * this.horizontal() + this.borderWidth + 10;
     this.lborder = 0.5 * this.longitudinal() + this.borderWidth + 10;
   }

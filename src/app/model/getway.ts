@@ -13,6 +13,7 @@ export class Getway extends BaseEvent {
     this.x = this.correctPosition(x, this.width);
     this.y = this.correctPosition(y, this.height);
     this.transform = 'rotate(45, ' + x + ', ' + y + ')';
+    this.type = '路由';
     this.hborder = 0.5 * this.horizontal() + this.borderWidth + 15;
     this.lborder = 0.5 * this.longitudinal() + this.borderWidth + 15;
   }

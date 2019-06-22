@@ -5,6 +5,7 @@ import {DesignerRoutingModule} from './designer-routing.module';
 import {DesignerComponent} from './designer.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {Ng2DragDropModule} from 'ng2-drag-drop';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,8 @@ import {Ng2DragDropModule} from 'ng2-drag-drop';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     DesignerRoutingModule,
     NgZorroAntdModule,
     Ng2DragDropModule.forRoot()

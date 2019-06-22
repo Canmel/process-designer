@@ -1,11 +1,11 @@
 .designer-background {
   height: 800px;
-  background-color: #efefef;
+  background-color: #efefef4d;
   overflow: hidden;
 }
 
 .tools-background {
-  height: 400px;
+  height: 250px;
   /*width: 150px;*/
   background-color: #cccccc54;
 }
@@ -65,4 +65,19 @@ p {
 
 .svg-tools :hover {
   background-color: #bbbbbb;
+}
+
+.operator-pool {
+
+}
+
+.operator-pool-move {
+  cursor: nesw-resize;
+  stroke: green;
+  fill: green;
+}
+
+.operator-pool:hover + rect {
+  stroke-width: 1;
+  cursor: nesw-resize;
 }

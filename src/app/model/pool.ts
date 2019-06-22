@@ -7,9 +7,9 @@ export class Pool extends BaseEvent {
 
   constructor(x: number, y: number, name: string) {
     super();
-    this.width = 120;
-    this.height = 50;
-    this.twidth = 20;
+    this.width = 500;
+    this.height = 300;
+    this.twidth = 40;
     this.x = this.correctPosition(x, this.width);
     this.y = this.correctPosition(y, this.height);
     if (name === undefined || name === '') {

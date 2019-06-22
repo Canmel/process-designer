@@ -40,6 +40,8 @@ export class DesignerComponent implements OnInit {
 
   allRect: Array<BaseEvent> = [];
 
+  operator: Pool;
+
   svgProperties = {
     scaleX: 1.0,
     scaleY: 1.0,
@@ -109,6 +111,7 @@ export class DesignerComponent implements OnInit {
 
   svgMouseUpHandler($event) {
     this.svgProperties.drag = false;
+    this.operator = null;
   }
 
   rectMouseUpHandler(e) {
@@ -157,11 +160,13 @@ export class DesignerComponent implements OnInit {
 
       if (!moveSuccessFlag) {
         this.rectToError(e.srcElement);
-      }else{
+      } else {
         this.rectToNormal(e.srcElement);
       }
 
       this.toCurrentPosition(e, this.taskMove);
+    } else if (this.operator) {
+      this.resizePool(e);
     } else {
       // 平移
       if (this.svgProperties.drag) {
@@ -323,7 +328,7 @@ export class DesignerComponent implements OnInit {
 
     // 删除连接到这个的节点的连线
     const result: Array<Polyline> = [];
-    this.polyLines.forEach(function (polyLine, index, array) {
+    this.polyLines.forEach(function (polyLine) {
       if (!(polyLine.startRect === _this.selected || polyLine.endRect === _this.selected)) {
         result.push(polyLine);
       }
@@ -347,6 +352,28 @@ export class DesignerComponent implements OnInit {
     }
     event.stopPropagation();
     return false;
+  }
+
+  // 泳道大小调节器
+  operatorRectMouseOverHandler(e: any, item: Pool) {
+    console.log('do hover');
+    $(e.srcElement).addClass('operator-pool');
+  }
+
+  // 泳道大小调节器
+  operatorRectMouseDownHandler(e: any, item: Pool) {
+    this.operator = item;
+    $(e.srcElement).addClass('operator-pool-move');
+    e.stopPropagation();
+  }
+
+  operatorRectMouseOutHandler(e: any, item: Pool) {
+    $(e.srcElement).removeClass('operator-pool');
+    $(e.srcElement).removeClass('operator-pool-move');
+  }
+
+  operatorRectMouseUpHandler(e: any, item: Pool) {
+    this.operator = null;
   }
 
   showTransition(e) {
@@ -453,5 +480,14 @@ export class DesignerComponent implements OnInit {
         _this.polyLines[index].setEndRect(_this.selected);
       }
     });
+  }
+
+  resizePool(e: any) {
+    if (this.operator) {
+      this.operator.width = e.offsetX - this.operator.x - this.svgProperties.translateX;
+      this.operator.height -= e.movementY;
+      this.operator.y += e.movementY;
+    }
+    console.log(this.operator.y, this.operator.height);
   }
 }

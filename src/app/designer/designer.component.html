@@ -76,7 +76,7 @@
     </nz-card>
   </div>
   <div style="position: absolute; top: 0px; right: 0px; height: 500px; width: 300px; z-index: 999">
-    <nz-card [nzBordered]="true" nzTitle="svgProperties" [nzExtra]="extraTemplate" class="tools-background"
+    <nz-card [nzBordered]="true" nzTitle="属性详情" [nzExtra]="extraTemplate" class="tools-background"
              style="padding: 0px">
       <div nz-row style="height: 100%;">
         <ul>
@@ -256,6 +256,13 @@
             <rect [attr.width]="item.width + 2 * item.borderWidth" [attr.height]="item.height + 2 * item.borderWidth"
                   fill="none"
                   [attr.x]="item.x - item.borderWidth" [attr.y]="item.y - item.borderWidth"></rect>
+
+            <circle [attr.cx]="item.x+item.width" [attr.cy]="item.y" r="5" [attr.stroke]="'black'" [attr.fill]="'black'"
+                    (mouseover)="operatorRectMouseOverHandler($event,item)"
+                    (mousedown)="operatorRectMouseDownHandler($event, item)"
+                    (mouseout)="operatorRectMouseOutHandler($event, item)"
+                    (mouseup)="operatorRectMouseUpHandler($event, item)"
+                    stroke-width="2"/>
           </g>
         </g>
 
